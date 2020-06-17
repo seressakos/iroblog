@@ -2,25 +2,18 @@ import React, { Component } from 'react';
 import {withRouter} from "react-router";
 
 const BlogFull =(props) => {
-  console.log('ghal', props.match.params.blogid)
-  console.log(props.id)
-  let urlParam = props.match.params.blogid;
-  let blogId = props.id;
-
-  // if (props.match.params.blogid === props.id) {
-  //   return (
-  //      <div>{props.id}</div>
-  //   )
-  // } else {
-  //   return null;
-  // }
-
   return (
-    <div>
-      {urlParam === props.id &&
-      <div>{props.id}</div>
+    [...Array(props.contentelements)].map((elem, index) => {
+      if (props.match.params.blogid === props.url[index]) {
+        return  <div key={index} id={props.id[index]}>
+          <h1>{props.title[index]}</h1>
+          {props.imageurl ?  <img src={props.imageurl[index]}/> : null}
+          {props.texts ? <p dangerouslySetInnerHTML={{ __html: props.texts[index] }}></p> : null}
+        </div>
+      } else {
+        return null;
       }
-    </div>
+    })
   )
 };
 

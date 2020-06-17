@@ -12,8 +12,10 @@ class MainPage extends Component {
       urls: [],
       blog: {
         contentelements: 0,
+        url: [],
         imageurls: [],
         title: [],
+        sumtext: [],
         texts: [],
         id: []
       }
@@ -23,7 +25,7 @@ class MainPage extends Component {
   componentDidMount() {
     Promise.all([
       fetch('https://samltest/jsonapi/node/swipe?include=field_swipe_image&fields[file--file]=uri', {'method': 'GET'}),
-      fetch('https://samltest/jsonapi/node/article?fields[node--article]=title,field_text,field_image&include=field_image&fields[file--file]=uri', {'method': 'GET'})
+      fetch('https://samltest/jsonapi/node/article?fields[node--article]=title,body,field_text,field_image&include=field_image&fields[file--file]=uri', {'method': 'GET'})
     ])
       .then (values => Promise.all(values.map(value => value.json())))
       .then (data => {
@@ -42,8 +44,10 @@ class MainPage extends Component {
         data[1]['data'].map(text=>{
           elements ++;
 
-          if (text['attributes']['field_text']) {
-            blog.texts.push(text['attributes']['field_text']['value']);
+          if (text['attributes']['body']) {
+            let sumtext = text['attributes']['body']['value'].substring(0, 255);
+            blog.texts.push(text['attributes']['body']['value']);
+            blog.sumtext.push(sumtext)
           }
 
           blog.id.push('blog' + elements);
@@ -59,10 +63,13 @@ class MainPage extends Component {
 
 
          data[1]['data'].map(title => {
-          blog.title.push(title['attributes']['title'])
+           let sanitazedString = title['attributes']['title'].replace(/[^a-zA-Z ]/g, "").split(' ').join('_').toLowerCase()
+          blog.title.push(title['attributes']['title']);
+           blog.url.push(sanitazedString);
         })
 
         this.setState({blog: blog})
+        console.log(this.state.blog)
       })
   }
 
@@ -82,28 +89,26 @@ class MainPage extends Component {
     return (
       <div>
         <Route path="/" exact render={() => ( <SwiperBlock url={this.state.urls[0]} clickedLeft={this.leftClickHandler} clickedRight={this.rightClickHandler}/>)}/>
-        {[...Array(this.state.blog.contentelements)].map((element, index) => {
-          return <Route key={index} path="/blog" render={() => (
-            <BlogBlock
-              key={index}
-              url={this.state.blog.imageurls[index]}
-              title={this.state.blog.title[index]}
-              texts={this.state.blog.texts[index]}
-              id={this.state.blog.id[index]}
-              />
-          )}/>
-        })}
-        {[...Array(this.state.blog.contentelements)].map((element, index) => {
-          return <Route key={index} path={'/:blogid'} render={() => (
+        <Route path="/blog" render={() => (
+          <BlogBlock
+            imageurl={this.state.blog.imageurls}
+            title={this.state.blog.title}
+            texts={this.state.blog.sumtext}
+            id={this.state.blog.id}
+            contentelements = {this.state.blog.contentelements}
+            url={this.state.blog.url}
+          />
+        )}/>
+        <Route path={'/:blogid'} render={() => (
             <BlogFull
-              key={index}
-              url={this.state.blog.imageurls[index]}
-              title={this.state.blog.title[index]}
-              texts={this.state.blog.texts[index]}
-              id={this.state.blog.id[index]}
+              imageurl={this.state.blog.imageurls}
+              title={this.state.blog.title}
+              texts={this.state.blog.texts}
+              id={this.state.blog.id}
+              contentelements = {this.state.blog.contentelements}
+              url={this.state.blog.url}
             />
           )}/>
-        })}
       </div>
       )
   }

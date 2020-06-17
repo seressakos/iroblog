@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import {Link} from "react-router-dom";
+import {withRouter} from "react-router";
 
-const BlogBlock =({url, texts, title, id}) => {
+const BlogBlock =(props) => {
   return (
-    <div id={id}>
-      <Link to={id}>
-        <h1>{title}</h1>
-      </Link>
+    [...Array(props.contentelements)].map((elem, index) => {
+      return  <div key={index} id={props.id[index]}>
+          <Link to={props.url[index]}>
+            <h1>{props.title[index]}</h1>
+          </Link>
 
-      {url ?  <img src={url}/> : null}
-      {texts ? <p dangerouslySetInnerHTML={{ __html: texts }}></p> : null}
-    </div>
+          {props.imageurl ?  <img src={props.imageurl[index]}/> : null}
+          {props.texts ? <p dangerouslySetInnerHTML={{ __html: props.texts[index] }}></p> : null}
+        </div>
+    })
   )
 };
 
-export default BlogBlock;
+export default withRouter(BlogBlock);
