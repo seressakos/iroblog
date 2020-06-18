@@ -19,7 +19,9 @@ class MainPage extends Component {
         texts: [],
         id: [],
         elementstorender: 3,
-        renderedelements: 0,
+        renderedelements: [],
+        splittedcontentelements : [],
+        paginationelements: [],
       },
       loading: true,
     }
@@ -27,10 +29,15 @@ class MainPage extends Component {
 
   componentDidMount() {
     Promise.all([
+
       fetch('https://samltest/jsonapi/node/swipe?include=field_swipe_image&fields[file--file]=uri',
         {'method': 'GET'},
       ),
-      fetch('https://samltest/jsonapi/node/article?fields[node--article]=title,body,field_text,field_image&include=field_image&fields[file--file]=uri', {'method': 'GET'})
+      fetch('https://samltest/jsonapi/node/article?fields[node--article]=title,body,field_text,field_image&include=field_image&fields[file--file]=uri', {'method': 'GET'}),
+      fetch('https://samltest/jsonapi/node/swipe?include=field_swipe_image&fields[file--file]=uri&sort=-nid',
+        {'method': 'GET'},
+      ),
+      fetch('https://samltest/jsonapi/node/article?fields[node--article]=title,body,field_text,field_image&include=field_image&fields[file--file]=uri&sort=-nid', {'method': 'GET'})
     ])
       .then (values => Promise.all(values.map(value => value.json())))
       .then (data => {
@@ -39,8 +46,8 @@ class MainPage extends Component {
         let elements = blog.contentelements;
 
         this.setState({loading: false})
-
         blog.renderedelements = 3;
+        blog.renderedelements = [0, 1, 2, 3];
 
         data[0]['included'].map(obj =>{
            let imgurl = 'https://samltest' +  obj['attributes']['uri']['url'];
@@ -77,6 +84,16 @@ class MainPage extends Component {
            blog.url.push(sanitazedString);
         })
 
+        for (let i = 0; i < elements; i++) {
+          blog.splittedcontentelements.push(i);
+        }
+
+        let paginationElementNumber = Math.ceil(elements / 4);
+
+        for (let i = 1; i < paginationElementNumber + 1; i++) {
+          blog.paginationelements.push(i)
+        }
+
         this.setState({blog: blog})
       })
   }
@@ -93,22 +110,49 @@ class MainPage extends Component {
     this.setState({counter: counter});
   }
 
-  renderElements = () => {
-    const blog = {...this.state.blog};
-    let elementsToRender = blog.elementstorender;
-    let renderedElements = blog.renderedelements;
-    let contentElements = blog.contentelements;
-    let sum = contentElements - renderedElements
+   renderElements = (e) => {
+     window.scrollTo(0, 0);
+     e.preventDefault();
 
-    if (renderedElements >= contentElements) {
+     const blog = {...this.state.blog}
+     let sliceEnd = e.target.id * 4;
+     let sliceStart = sliceEnd - 4;
+
+     blog.renderedelements = blog.splittedcontentelements.slice(sliceStart, sliceEnd);
+
+     this.setState({blog: blog})
+   }
+
+   paginationArrowRight = () => {
+     window.scrollTo(0, 0);
+     const blog = {...this.state.blog};
+     let lastRenderedElement = blog.renderedelements[blog.renderedelements.length - 1];
+     let sliceStart = lastRenderedElement + 1;
+     let sliceEnd = sliceStart + 4;
+
+     // Check if we are on the last page. (If we have X content, the last
+     // element is going to be X-1.
+     if (blog.contentelements-1 === lastRenderedElement) {
+       return false
+     }
+
+     blog.renderedelements = blog.splittedcontentelements.slice(sliceStart, sliceEnd);
+
+     this.setState({blog: blog})
+   }
+
+  paginationArrowLeft = () => {
+    window.scrollTo(0, 0);
+    const blog = {...this.state.blog};
+    let sliceEnd = blog.renderedelements[0];
+    let sliceStart = sliceEnd - 4;
+
+
+    if (blog.renderedelements[0] === 0) {
       return false
-    } else if (renderedElements <= sum) {
-      renderedElements = renderedElements + elementsToRender;
-    } else {
-      renderedElements = renderedElements + (contentElements % elementsToRender);
     }
 
-    blog.renderedelements = renderedElements
+    blog.renderedelements = blog.splittedcontentelements.slice(sliceStart, sliceEnd);
 
     this.setState({blog: blog})
   }
@@ -138,6 +182,9 @@ class MainPage extends Component {
               contentelements = {this.state.blog.renderedelements}
               url={this.state.blog.url}
               renderHandler={this.renderElements}
+              pagination={this.state.blog.paginationelements}
+              rightarrowhandler={this.paginationArrowRight}
+              leftarrowhandler={this.paginationArrowLeft}
             />
           )}/>
           <Route path={'/:blogid'} render={() => (

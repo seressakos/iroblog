@@ -5,26 +5,35 @@ import BlogTeaser from '../Node/BlogTeaser'
 
 const BlogBlock =(props) => {
   let elemNum = props.contentelements;
-  let blogs =   [...Array(props.contentelements)].map((elem, index) => {
+  let elementsToRender = props.contentelements
+  let blogs =   elementsToRender.map((elem, index) => {
     return <BlogTeaser
       key={index}
-      id={props.id[index]}
-      link={props.url[index]}
-      title={props.title[index]}
-      imageurl={props.imageurl[index]}
-      text={props.texts[index]}
+      id={props.id[elem]}
+      link={props.url[elem]}
+      title={props.title[elem]}
+      imageurl={props.imageurl[elem]}
+      text={props.texts[elem]}
     />
   })
 
-  // const testhandler =()=> {
-  //   elemNum = elemNum + 1;
-  //   console.log(elemNum)
-  // }
+  let paginations = props.pagination.map((elem, index) => {
+    return <li key={index}>
+        <a href='/' id={elem} onClick={(e) =>props.renderHandler(e)}>{elem}</a>
+      </li>
+  })
+
+  let navigationBlock = <div>
+      <div onClick={()=>props.leftarrowhandler()}>Arrayleft</div>
+      {paginations}
+      <div onClick={()=>props.rightarrowhandler()}>ArrayRight</div>
+    </div>
 
   return (
     <div>
       {blogs}
       <button onClick={props.renderHandler}>MORE</button>
+      {navigationBlock}
     </div>
   )
 };
