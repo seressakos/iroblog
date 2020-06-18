@@ -1,19 +1,31 @@
 import React, { Component } from 'react';
-import {Link} from "react-router-dom";
+
 import {withRouter} from "react-router";
+import BlogTeaser from '../Node/BlogTeaser'
 
 const BlogBlock =(props) => {
-  return (
-    [...Array(props.contentelements)].map((elem, index) => {
-      return  <div key={index} id={props.id[index]}>
-          <Link to={props.url[index]}>
-            <h1>{props.title[index]}</h1>
-          </Link>
+  let elemNum = props.contentelements;
+  let blogs =   [...Array(props.contentelements)].map((elem, index) => {
+    return <BlogTeaser
+      key={index}
+      id={props.id[index]}
+      link={props.url[index]}
+      title={props.title[index]}
+      imageurl={props.imageurl[index]}
+      text={props.texts[index]}
+    />
+  })
 
-          {props.imageurl ?  <img src={props.imageurl[index]}/> : null}
-          {props.texts ? <p dangerouslySetInnerHTML={{ __html: props.texts[index] }}></p> : null}
-        </div>
-    })
+  // const testhandler =()=> {
+  //   elemNum = elemNum + 1;
+  //   console.log(elemNum)
+  // }
+
+  return (
+    <div>
+      {blogs}
+      <button onClick={props.renderHandler}>MORE</button>
+    </div>
   )
 };
 

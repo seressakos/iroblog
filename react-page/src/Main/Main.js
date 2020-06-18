@@ -17,14 +17,19 @@ class MainPage extends Component {
         title: [],
         sumtext: [],
         texts: [],
-        id: []
-      }
+        id: [],
+        elementstorender: 3,
+        renderedelements: 0,
+      },
+      loading: true,
     }
   }
 
   componentDidMount() {
     Promise.all([
-      fetch('https://samltest/jsonapi/node/swipe?include=field_swipe_image&fields[file--file]=uri', {'method': 'GET'}),
+      fetch('https://samltest/jsonapi/node/swipe?include=field_swipe_image&fields[file--file]=uri',
+        {'method': 'GET'},
+      ),
       fetch('https://samltest/jsonapi/node/article?fields[node--article]=title,body,field_text,field_image&include=field_image&fields[file--file]=uri', {'method': 'GET'})
     ])
       .then (values => Promise.all(values.map(value => value.json())))
@@ -32,6 +37,10 @@ class MainPage extends Component {
         const urls = [];
         const blog = {...this.state.blog}
         let elements = blog.contentelements;
+
+        this.setState({loading: false})
+
+        blog.renderedelements = 3;
 
         data[0]['included'].map(obj =>{
            let imgurl = 'https://samltest' +  obj['attributes']['uri']['url'];
@@ -69,7 +78,6 @@ class MainPage extends Component {
         })
 
         this.setState({blog: blog})
-        console.log(this.state.blog)
       })
   }
 
@@ -85,21 +93,54 @@ class MainPage extends Component {
     this.setState({counter: counter});
   }
 
+  renderElements = () => {
+    const blog = {...this.state.blog};
+    let elementsToRender = blog.elementstorender;
+    let renderedElements = blog.renderedelements;
+    let contentElements = blog.contentelements;
+    let sum = contentElements - renderedElements
+
+    if (renderedElements >= contentElements) {
+      return false
+    } else if (renderedElements <= sum) {
+      renderedElements = renderedElements + elementsToRender;
+    } else {
+      renderedElements = renderedElements + (contentElements % elementsToRender);
+    }
+
+    blog.renderedelements = renderedElements
+
+    this.setState({blog: blog})
+  }
+
   render() {
-    return (
-      <div>
-        <Route path="/" exact render={() => ( <SwiperBlock url={this.state.urls[0]} clickedLeft={this.leftClickHandler} clickedRight={this.rightClickHandler}/>)}/>
-        <Route path="/blog" render={() => (
-          <BlogBlock
-            imageurl={this.state.blog.imageurls}
-            title={this.state.blog.title}
-            texts={this.state.blog.sumtext}
-            id={this.state.blog.id}
-            contentelements = {this.state.blog.contentelements}
-            url={this.state.blog.url}
-          />
-        )}/>
-        <Route path={'/:blogid'} render={() => (
+    if (this.state.loading) {
+      return (
+        <div>
+          <h1>Loading...</h1>
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <Route
+            path="/"
+            exact render={() => ( <SwiperBlock
+              url={this.state.urls[0]}
+              clickedLeft={this.leftClickHandler}
+              clickedRight={this.rightClickHandler}/>)}/>
+          <Route path="/blog" render={() => (
+            <BlogBlock
+              imageurl={this.state.blog.imageurls}
+              title={this.state.blog.title}
+              texts={this.state.blog.sumtext}
+              id={this.state.blog.id}
+              contentelements = {this.state.blog.renderedelements}
+              url={this.state.blog.url}
+              renderHandler={this.renderElements}
+            />
+          )}/>
+          <Route path={'/:blogid'} render={() => (
             <BlogFull
               imageurl={this.state.blog.imageurls}
               title={this.state.blog.title}
@@ -109,8 +150,9 @@ class MainPage extends Component {
               url={this.state.blog.url}
             />
           )}/>
-      </div>
+        </div>
       )
+    }
   }
 }
 
