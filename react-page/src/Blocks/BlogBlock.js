@@ -32,7 +32,6 @@ const BlogBlock =(props) => {
   return (
     <div>
       {blogs}
-      <button onClick={props.renderHandler}>MORE</button>
       {navigationBlock}
     </div>
   )

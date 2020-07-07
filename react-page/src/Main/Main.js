@@ -29,15 +29,10 @@ class MainPage extends Component {
 
   componentDidMount() {
     Promise.all([
-
       fetch('https://samltest/jsonapi/node/swipe?include=field_swipe_image&fields[file--file]=uri',
         {'method': 'GET'},
       ),
-      fetch('https://samltest/jsonapi/node/article?fields[node--article]=title,body,field_text,field_image&include=field_image&fields[file--file]=uri', {'method': 'GET'}),
-      fetch('https://samltest/jsonapi/node/swipe?include=field_swipe_image&fields[file--file]=uri&sort=-nid',
-        {'method': 'GET'},
-      ),
-      fetch('https://samltest/jsonapi/node/article?fields[node--article]=title,body,field_text,field_image&include=field_image&fields[file--file]=uri&sort=-nid', {'method': 'GET'})
+      fetch('https://samltest/jsonapi/node/article?fields[node--article]=title,body,field_text,field_image&include=field_image&fields[file--file]=uri&sort=-nid', {'method': 'GET'}),
     ])
       .then (values => Promise.all(values.map(value => value.json())))
       .then (data => {
@@ -46,7 +41,6 @@ class MainPage extends Component {
         let elements = blog.contentelements;
 
         this.setState({loading: false})
-        blog.renderedelements = 3;
         blog.renderedelements = [0, 1, 2, 3];
 
         data[0]['included'].map(obj =>{
@@ -70,13 +64,10 @@ class MainPage extends Component {
           blog.contentelements = elements;
         })
 
-
         data[1]['included'].map(element=> {
           let bimage = 'https://samltest' + element['attributes']['uri']['url'];
           blog.imageurls.push(bimage);
         })
-
-
 
          data[1]['data'].map(title => {
            let sanitazedString = title['attributes']['title'].replace(/[^a-zA-Z ]/g, "").split(' ').join('_').toLowerCase()
