@@ -51,27 +51,32 @@ class MainPage extends Component {
         this.setState({urls: urls})
 
 
-        data[1]['data'].map(text=>{
+        data[1]['data'].map((elem, index)=> {
           elements ++;
 
-          if (text['attributes']['body']) {
-            let sumtext = text['attributes']['body']['value'].substring(0, 255);
-            blog.texts.push(text['attributes']['body']['value']);
+          if (elem['attributes']['body']) {
+            let sumtext = elem['attributes']['body']['value'].substring(0, 255);
+            blog.texts.push(elem['attributes']['body']['value']);
             blog.sumtext.push(sumtext)
+          }
+
+          if (elem['relationships']['field_image']['data'] !== null) {
+            if (data[1]['included'][index] !== undefined) {
+              let blogImage = 'https://samltest' + data[1]['included'][index]['attributes']['uri']['url'];
+              blog.imageurls.push(blogImage);
+            }
+          } else {
+            let blogImage = '';
+            blog.imageurls.push(blogImage);
           }
 
           blog.id.push('blog' + elements);
           blog.contentelements = elements;
         })
 
-        data[1]['included'].map(element=> {
-          let bimage = 'https://samltest' + element['attributes']['uri']['url'];
-          blog.imageurls.push(bimage);
-        })
-
          data[1]['data'].map(title => {
            let sanitazedString = title['attributes']['title'].replace(/[^a-zA-Z ]/g, "").split(' ').join('_').toLowerCase()
-          blog.title.push(title['attributes']['title']);
+           blog.title.push(title['attributes']['title']);
            blog.url.push(sanitazedString);
         })
 
