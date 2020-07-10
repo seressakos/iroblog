@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Logo from './Logo/Logo';
 import './App.css';
 import MainPage from './Main/Main'
 import {BrowserRouter} from "react-router-dom";
@@ -11,6 +11,9 @@ class App extends Component {
       <div className="App">
         <BrowserRouter>
         <header className="App-header">
+          <div className="header__upper">
+            <Logo/>
+          </div>
          <ul>
            <li><Link to="/">Home</Link></li>
            <li><Link to={{
@@ -19,11 +22,7 @@ class App extends Component {
            }}>Blog</Link></li>
          </ul>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-
-          <MainPage/>
+        <MainPage/>
         </BrowserRouter>
       </div>
     );
