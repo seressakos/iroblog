@@ -4,9 +4,8 @@ import {withRouter} from "react-router";
 import BlogTeaser from '../Node/BlogTeaser'
 
 const BlogBlock =(props) => {
-  let elemNum = props.contentelements;
   let elementsToRender = props.contentelements
-  let blogs =   elementsToRender.map((elem, index) => {
+  let blogs = elementsToRender.map((elem, index) => {
     return <BlogTeaser
       key={index}
       id={props.id[elem]}

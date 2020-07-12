@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import HeroBlock from '../Blocks/HeroBlock'
 import SwiperBlock from '../Blocks/SwiperBlock'
 import BlogBlock from '../Blocks/BlogBlock'
 import BlogFull from "../Node/BlogFull";
@@ -10,6 +11,11 @@ class MainPage extends Component {
     this.state = {
       url: '',
       urls: [],
+      hero : {
+        urls: [''],
+        classes: ['active', '', ''],
+      },
+      classname: 'cica kutya',
       blog: {
         contentelements: 0,
         url: [],
@@ -33,13 +39,15 @@ class MainPage extends Component {
         {'method': 'GET'},
       ),
       fetch('https://samltest/jsonapi/node/article?fields[node--article]=title,body,field_text,field_image&include=field_image&fields[file--file]=uri&sort=-nid', {'method': 'GET'}),
+      fetch('https://samltest/jsonapi/node/home_page?fields[node--home_page]=body&include=field_hero&fields[file--file]=uri&sort=-nid', {'method': 'GET'}),
     ])
       .then (values => Promise.all(values.map(value => value.json())))
       .then (data => {
         const urls = [];
+        const heroImageUrls = [];
         const blog = {...this.state.blog}
+        const hero = {...this.state.hero}
         let elements = blog.contentelements;
-
         this.setState({loading: false})
         blog.renderedelements = [0, 1, 2, 3];
 
@@ -91,12 +99,35 @@ class MainPage extends Component {
         }
 
         this.setState({blog: blog})
+
+        data[2]['included'].map(obj => {
+          let imgurl = 'https://samltest' +  obj['attributes']['uri']['url'];
+          heroImageUrls.push(imgurl);
+        })
+
+        hero.urls = heroImageUrls
+
+        this.setState({hero: hero});
+
       })
+  }
+
+  getIdofActiveDot = (e) => {
+    const hero = {...this.state.hero}
+    let intager = e.target.id;
+    let array = hero.classes
+    array.splice(0, array.length);
+    array[intager] = "active";
+    hero.classes = array
+
+    this.setState({hero: hero})
   }
 
   leftClickHandler = () => {
     let counter = this.state.counter;
     counter --
+    let elem = document.querySelector('.cica');
+    console.log(elem);
     this.setState({counter: counter});
   }
 
@@ -165,10 +196,20 @@ class MainPage extends Component {
         <div>
           <Route
             path="/"
-            exact render={() => ( <SwiperBlock
+            exact render={() => (
+              <div>
+               <HeroBlock
+                    imageurls={this.state.hero.urls}
+                    class={this.state.hero.classes}
+                    idhandler={this.getIdofActiveDot}
+                />
+              <SwiperBlock
               url={this.state.urls[0]}
+              classname={this.state.classname}
               clickedLeft={this.leftClickHandler}
-              clickedRight={this.rightClickHandler}/>)}/>
+              clickedRight={this.rightClickHandler}/>
+              </div>
+              )}/>
           <Route path="/blog" render={() => (
             <BlogBlock
               imageurl={this.state.blog.imageurls}
