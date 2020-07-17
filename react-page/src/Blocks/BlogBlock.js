@@ -1,9 +1,12 @@
-import React, { Component } from 'react';
-
+import React, { useState, useEffect  } from 'react';
 import {withRouter} from "react-router";
 import BlogTeaser from '../Node/BlogTeaser'
 
 const BlogBlock =(props) => {
+  useEffect(() => {
+    console.log('use')
+  })
+
   let elementsToRender = props.contentelements
   let blogs = elementsToRender.map((elem, index) => {
     return <BlogTeaser
@@ -18,7 +21,7 @@ const BlogBlock =(props) => {
 
   let paginations = props.pagination.map((elem, index) => {
     return <li key={index}>
-        <a href='/' id={elem} onClick={(e) =>props.renderHandler(e)}>{elem}</a>
+        <a href='/' id={elem} onClick={(e) =>props.renderHandler(e, props)}>{elem}</a>
       </li>
   })
 

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import Header from '../Blocks/Header'
 import HeroBlock from '../Blocks/HeroBlock'
 import SwiperBlock from '../Blocks/SwiperBlock'
 import BlogBlock from '../Blocks/BlogBlock'
 import BlogFull from "../Node/BlogFull";
-import {Route, Link} from "react-router";
+import {Route} from "react-router";
 
 class MainPage extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class MainPage extends Component {
       url: '',
       urls: [],
       hero : {
-        urls: [''],
+        urls: [],
         classes: ['active', '', ''],
       },
       classname: 'cica kutya',
@@ -35,11 +36,11 @@ class MainPage extends Component {
 
   componentDidMount() {
     Promise.all([
-      fetch('https://samltest/jsonapi/node/swipe?include=field_swipe_image&fields[file--file]=uri',
+      fetch('https://iroblog/jsonapi/node/swipe?include=field_swipe_image&fields[file--file]=uri',
         {'method': 'GET'},
       ),
-      fetch('https://samltest/jsonapi/node/article?fields[node--article]=title,body,field_text,field_image&include=field_image&fields[file--file]=uri&sort=-nid', {'method': 'GET'}),
-      fetch('https://samltest/jsonapi/node/home_page?fields[node--home_page]=body&include=field_hero&fields[file--file]=uri&sort=-nid', {'method': 'GET'}),
+      fetch('https://iroblog/jsonapi/node/article?fields[node--article]=title,body,field_image&include=field_image&fields[file--file]=uri&sort=-nid', {'method': 'GET'}),
+      fetch('https://iroblog/jsonapi/node/home_page?fields[node--home_page]=body&include=field_hero&fields[file--file]=uri&sort=-nid', {'method': 'GET'}),
     ])
       .then (values => Promise.all(values.map(value => value.json())))
       .then (data => {
@@ -49,15 +50,15 @@ class MainPage extends Component {
         const hero = {...this.state.hero}
         let elements = blog.contentelements;
         this.setState({loading: false})
-        blog.renderedelements = [0, 1, 2, 3];
 
-        data[0]['included'].map(obj =>{
-           let imgurl = 'https://samltest' +  obj['attributes']['uri']['url'];
+        if (data[0]['included']) {
+          data[0]['included'].map(obj =>{
+            let imgurl = 'https://iroblog' +  obj['attributes']['uri']['url'];
             urls.push(imgurl);
-         })
+          })
 
-        this.setState({urls: urls})
-
+          this.setState({urls: urls})
+        }
 
         data[1]['data'].map((elem, index)=> {
           elements ++;
@@ -70,7 +71,7 @@ class MainPage extends Component {
 
           if (elem['relationships']['field_image']['data'] !== null) {
             if (data[1]['included'][index] !== undefined) {
-              let blogImage = 'https://samltest' + data[1]['included'][index]['attributes']['uri']['url'];
+              let blogImage = 'https://iroblog' + data[1]['included'][index]['attributes']['uri']['url'];
               blog.imageurls.push(blogImage);
             }
           } else {
@@ -79,8 +80,13 @@ class MainPage extends Component {
           }
 
           blog.id.push('blog' + elements);
-          blog.contentelements = elements;
+
+          if (index < 4) {
+            blog.renderedelements.push(index)
+          }
         })
+
+        blog.contentelements = data[1]['data'].length;
 
          data[1]['data'].map(title => {
            let sanitazedString = title['attributes']['title'].replace(/[^a-zA-Z ]/g, "").split(' ').join('_').toLowerCase()
@@ -100,16 +106,32 @@ class MainPage extends Component {
 
         this.setState({blog: blog})
 
-        data[2]['included'].map(obj => {
-          let imgurl = 'https://samltest' +  obj['attributes']['uri']['url'];
-          heroImageUrls.push(imgurl);
-        })
+        if (data[2]['included']) {
+          data[2]['included'].map(obj => {
+            let imgurl = 'https://iroblog' +  obj['attributes']['uri']['url'];
+            heroImageUrls.push(imgurl);
+          })
 
-        hero.urls = heroImageUrls
+          hero.urls = heroImageUrls
 
-        this.setState({hero: hero});
-
+          this.setState({hero: hero});
+        }
       })
+  }
+
+  menuHandler = () => {
+    const blog = {...this.state.blog}
+    let contentelements = blog.contentelements;
+    const firstRenderedElements = [];
+
+    for (let i = 0; i < contentelements - 1; i ++) {
+      if (i < 4) {
+        firstRenderedElements.push(i)
+      }
+    }
+
+    blog.renderedelements = firstRenderedElements
+    this.setState({blog: blog})
   }
 
   getIdofActiveDot = (e) => {
@@ -127,7 +149,6 @@ class MainPage extends Component {
     let counter = this.state.counter;
     counter --
     let elem = document.querySelector('.cica');
-    console.log(elem);
     this.setState({counter: counter});
   }
 
@@ -137,7 +158,7 @@ class MainPage extends Component {
     this.setState({counter: counter});
   }
 
-   renderElements = (e) => {
+   renderElements = (e, props) => {
      window.scrollTo(0, 0);
      e.preventDefault();
 
@@ -194,20 +215,28 @@ class MainPage extends Component {
     } else {
       return (
         <div>
+          <Header navigationhandler={this.menuHandler}/>
           <Route
             path="/"
             exact render={() => (
               <div>
-               <HeroBlock
-                    imageurls={this.state.hero.urls}
-                    class={this.state.hero.classes}
-                    idhandler={this.getIdofActiveDot}
-                />
-              <SwiperBlock
-              url={this.state.urls[0]}
-              classname={this.state.classname}
-              clickedLeft={this.leftClickHandler}
-              clickedRight={this.rightClickHandler}/>
+                {
+                  this.state.hero.urls.length > 0 ?
+                    <HeroBlock
+                      imageurls={this.state.hero.urls}
+                      class={this.state.hero.classes}
+                      idhandler={this.getIdofActiveDot}
+                    /> : null
+                }
+                {
+                  this.state.urls[0] ?
+                  <SwiperBlock
+                  url={this.state.urls[0]}
+                  classname={this.state.classname}
+                  clickedLeft={this.leftClickHandler}
+                  clickedRight={this.rightClickHandler}/>
+                  : null
+                }
               </div>
               )}/>
           <Route path="/blog" render={() => (
