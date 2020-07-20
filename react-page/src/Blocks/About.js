@@ -6,8 +6,35 @@ const AboutBlockWrapper =  styled.div`
 `;
 
 const InnerWrapper = styled.div`
-
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  
+  @media (min-width: 900px) {
+    flex-direction: row;
+  }
 `;
+
+const TextWrapper = styled.div`
+   width: auto;
+   
+   @media (min-width: 900px) {
+     max-width: calc(100% / 12 * 8);
+   }
+`;
+
+const ImageWrapper = styled.div`
+  width: auto;
+  
+  @media (min-width: 900px) {
+    margin-left: 60px;
+    max-width: calc(100% / 12 * 4 - 60px);
+  }
+  
+  img {
+    border-radius: 50%;
+  } 
+`
 
 class About extends Component {
   constructor() {
@@ -66,8 +93,12 @@ class About extends Component {
     return (
        <AboutBlockWrapper>
         <InnerWrapper className="container">
-         {aboutText}
-         {profileImage}
+          <TextWrapper>
+            {aboutText}
+          </TextWrapper>
+          <ImageWrapper>
+            {profileImage}
+          </ImageWrapper>
          </InnerWrapper>
        </AboutBlockWrapper>
     )

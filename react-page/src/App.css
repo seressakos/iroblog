@@ -16,8 +16,18 @@ body {
   font-family: 'Muli Regular';
 }
 
-.App {
-  text-align: center;
+.container {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+@media screen and (min-width: 1200px) {
+  .container {
+    width: 1200px;
+  }
 }
 
 .header__upper {

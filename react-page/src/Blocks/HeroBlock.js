@@ -5,7 +5,7 @@ class heroBlock extends Component {
   render () {
     let className = this.props.class;
     let headerImage = this.props.imageurls.map((elem, index) => {
-      return <img key={index} id={index} className= {className[index] ? 'hero-image ' + className[index] : 'hero-image'} src={this.props.imageurls[index]}></img>
+      return <div key={index} id={index} className= {className[index] ? 'hero-image ' + className[index] : 'hero-image'} style={{ backgroundImage:`url(${this.props.imageurls[index]})`}}></div>
     });
 
     let dots = this.props.imageurls.map((elem, index) => {
@@ -24,3 +24,5 @@ class heroBlock extends Component {
 }
 
 export default heroBlock;
+
+//
