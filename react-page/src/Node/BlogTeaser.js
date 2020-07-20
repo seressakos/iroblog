@@ -8,7 +8,7 @@ const blogTeaser = (props) => {
          <h1>{props.title}</h1>
         </Link>
           {props.imageurl ?  <img src={props.imageurl} width='400' height='300'/> : null}
-          {props.text ? <p dangerouslySetInnerHTML={{ __html: props.text }}></p> : null}
+          {props.text ? <div dangerouslySetInnerHTML={{ __html: props.text }}></div> : null}
     </div>
   )
 }

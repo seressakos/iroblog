@@ -1,13 +1,27 @@
 import React, { Component } from 'react';
 import Logo from '../Logo/Logo';
 import {Link} from "react-router-dom";
-import {Route} from "react-router";
+import '../App.css'
 import styled, {css} from 'styled-components'
 
 const Ul = styled.ul`
   background-image: linear-gradient(to bottom right, #FEDFC0, #FFECD9);
   padding: 20px 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  list-style: none;
 `;
+
+const Li = styled.li`
+  margin: 0 15px;
+  
+  a {
+    color: #EA4505;
+    text-decoration: none;
+    font-family: 'Muli Bold';
+  }
+`
 
 class Header extends Component {
   render() {
@@ -18,11 +32,11 @@ class Header extends Component {
         </div>
         <nav className="main-navigation">
           <Ul>
-            <li><Link to="/">Home</Link></li>
-            <li onClick={this.props.navigationhandler}><Link to={{
+            <Li><Link to="/">Home</Link></Li>
+            <Li onClick={this.props.navigationhandler}><Link to={{
               pathname: '/blog',
               hash: '#blog'
-            }}>Blog</Link></li>
+            }}>Blog</Link></Li>
           </Ul>
         </nav>
       </header>

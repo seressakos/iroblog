@@ -4,6 +4,7 @@ import HeroBlock from '../Blocks/HeroBlock'
 import SwiperBlock from '../Blocks/SwiperBlock'
 import BlogBlock from '../Blocks/BlogBlock'
 import BlogFull from "../Node/BlogFull";
+import About from '../Blocks/About';
 import {Route} from "react-router";
 
 class MainPage extends Component {
@@ -237,6 +238,7 @@ class MainPage extends Component {
                   clickedRight={this.rightClickHandler}/>
                   : null
                 }
+                <About/>
               </div>
               )}/>
           <Route path="/blog" render={() => (

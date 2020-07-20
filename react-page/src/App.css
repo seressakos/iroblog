@@ -1,3 +1,21 @@
+@font-face {
+  font-family: 'Muli Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Muli Regular'), url('./assets/fonts/Muli-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Muli Bold';
+  font-style: normal;
+  font-weight: bold;
+  src: local('Muli Bold'), url('./assets/fonts/Muli-Bold.woff') format('woff');
+}
+
+body {
+  font-family: 'Muli Regular';
+}
+
 .App {
   text-align: center;
 }
