@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import styled, {css} from 'styled-components'
+import irologo from '../assets/images/Logo.png'
 
 const AboutBlockWrapper =  styled.div`
-
+    background: no-repeat bottom right url('/vector.png');
 `;
 
 const InnerWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  padding-top: 70px;
   
   @media (min-width: 900px) {
     flex-direction: row;
