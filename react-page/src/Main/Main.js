@@ -3,6 +3,7 @@ import Header from '../Blocks/Header'
 import HeroBlock from '../Blocks/HeroBlock'
 import SwiperBlock from '../Blocks/SwiperBlock'
 import BlogBlock from '../Blocks/BlogBlock'
+import MyBook from '../Blocks/MyBooks'
 import BlogFull from "../Node/BlogFull";
 import About from '../Blocks/About';
 import {Route} from "react-router";
@@ -239,6 +240,7 @@ class MainPage extends Component {
                   : null
                 }
                 <About/>
+                <MyBook/>
               </div>
               )}/>
           <Route path="/blog" render={() => (

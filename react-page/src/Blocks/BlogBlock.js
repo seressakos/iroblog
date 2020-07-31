@@ -3,10 +3,6 @@ import {withRouter} from "react-router";
 import BlogTeaser from '../Node/BlogTeaser'
 
 const BlogBlock =(props) => {
-  useEffect(() => {
-    console.log('use')
-  })
-
   let elementsToRender = props.contentelements
   let blogs = elementsToRender.map((elem, index) => {
     return <BlogTeaser
