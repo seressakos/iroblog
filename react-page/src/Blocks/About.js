@@ -11,6 +11,7 @@ const InnerWrapper = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
   padding-top: 70px;
+  padding-bottom: 35px;
   
   @media (min-width: 900px) {
     flex-direction: row;

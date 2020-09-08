@@ -18,7 +18,6 @@ class MainPage extends Component {
         urls: [],
         classes: ['active', '', ''],
       },
-      classname: 'cica kutya',
       blog: {
         contentelements: 0,
         url: [],
@@ -33,6 +32,8 @@ class MainPage extends Component {
         paginationelements: [],
       },
       loading: true,
+      counter: 0,
+      magnified: false,
     }
   }
 
@@ -150,14 +151,31 @@ class MainPage extends Component {
   leftClickHandler = () => {
     let counter = this.state.counter;
     counter --
-    let elem = document.querySelector('.cica');
+
+    if (counter < 0) {
+      return
+    }
+
     this.setState({counter: counter});
   }
 
   rightClickHandler = () => {
     let counter = this.state.counter;
+    let urls = this.state.urls
     counter ++
+
+    if (counter > urls.length - 1) {
+      return
+    }
+
     this.setState({counter: counter});
+  }
+
+  magnifiedToggle = () => {
+    let magnified = !this.state.magnified
+    console.log(magnified);
+
+    this.setState({magnified: magnified});
   }
 
    renderElements = (e, props) => {
@@ -230,17 +248,19 @@ class MainPage extends Component {
                       idhandler={this.getIdofActiveDot}
                     /> : null
                 }
+                <About/>
+                <MyBook/>
                 {
                   this.state.urls[0] ?
                   <SwiperBlock
-                  url={this.state.urls[0]}
-                  classname={this.state.classname}
+                  counter={this.state.counter}
+                  urls={this.state.urls}
+                  magnify={this.magnifiedToggle}
+                  magnified={this.state.magnified}
                   clickedLeft={this.leftClickHandler}
                   clickedRight={this.rightClickHandler}/>
                   : null
                 }
-                <About/>
-                <MyBook/>
               </div>
               )}/>
           <Route path="/blog" render={() => (

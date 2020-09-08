@@ -49,3 +49,12 @@ body {
 .App-intro {
   font-size: large;
 }
+
+.button {
+  padding: 12px;
+  background: #FC7E01;
+  color: white;
+  border-radius: 4px;
+  text-decoration: none;
+  margin-top: 1rem;
+}
