@@ -1,6 +1,19 @@
 import React, {useEffect} from 'react';
 import {withRouter} from "react-router-dom";
-import styled, {css} from 'styled-components'
+import styled, {css} from 'styled-components';
+
+const SwiperBlockWrapper = styled.div`
+  position: relative;
+  background: no-repeat bottom left url('/swiper-background.png');
+  padding-top: 168px;
+  padding-bottom: 70px; 
+  
+  h2 {
+    position: absolute;
+    top: 30px;
+    left: 5%;
+  }
+`;
 
 const PagesBlock = styled.div`
   display: flex;
@@ -12,6 +25,7 @@ const PagesBlockMagnified = styled.div`
   flex-direction: column;
   position: absolute;
   width: 100%;
+  top: 0;
   
   .canvas {
     background: white;
@@ -63,27 +77,38 @@ const ButtonWrapper = styled.div`
   
   .magnify {
     width: calc(100% / 12 * 5);
-    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    
+    .magnifying-glass {
+      background: no-repeat bottom left url('/search.png');
+      height: 24px;
+      width: 24px;
+    }
   }
 `;
 
 const swiperBlock = (props) => {
+  let ButtonBlock =  <ButtonWrapper>
+    <div className="pagers">
+      <span className="arrow left" onClick={props.clickedLeft}></span>
+      <span className=" arrow right" onClick={props.clickedRight}></span>
+    </div>
+    <div className="magnify">
+      <div className="magnifying-glass" onClick={props.magnify}></div>
+    </div>
+  </ButtonWrapper>;
+
   return (
-    <div style={{position: 'relative'}}>
+    <SwiperBlockWrapper>
+      <h2>Belelapozò</h2>
       {!props.magnified ?
       <div className="container">
         <PagesBlock>
           <Pages>
             <img src={props.urls[props.counter]} width='780px' height='550px'/>
-            <ButtonWrapper>
-              <div className="pagers">
-                <span className="arrow left" onClick={props.clickedLeft}></span>
-                <span className=" arrow right" onClick={props.clickedRight}></span>
-              </div>
-              <div className="magnify">
-                <button onClick={props.magnify}>Nagyito</button>
-              </div>
-            </ButtonWrapper>
+            {ButtonBlock}
           </Pages>
         </PagesBlock>
       </div>:
@@ -91,20 +116,12 @@ const swiperBlock = (props) => {
             <div className='canvas'>
               <Pages>
                 <img src={props.urls[props.counter]} width='1000px' height='704px'/>
-                <ButtonWrapper>
-                  <div className="pagers">
-                    <button onClick={props.clickedLeft}>Left</button>
-                    <button onClick={props.clickedRight}>Right</button>
-                  </div>
-                  <div className="magnify">
-                   <button onClick={props.magnify}>X</button>
-                  </div>
-                </ButtonWrapper>
+                {ButtonBlock}
               </Pages>
             </div>
           </PagesBlockMagnified>
         }
-    </div>
+    </SwiperBlockWrapper>
   )
 }
 
