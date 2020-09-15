@@ -65,3 +65,7 @@ h2  {
   font-size: 36px;
   line-height: 42px;
 }
+
+.small {
+  filter: blur(3px);
+}

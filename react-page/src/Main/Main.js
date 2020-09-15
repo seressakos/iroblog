@@ -4,6 +4,7 @@ import HeroBlock from '../Blocks/HeroBlock'
 import SwiperBlock from '../Blocks/SwiperBlock'
 import BlogBlock from '../Blocks/BlogBlock'
 import MyBook from '../Blocks/MyBooks'
+import BlogSlider from '../Blocks/BlogsSider'
 import BlogFull from "../Node/BlogFull";
 import About from '../Blocks/About';
 import {Route} from "react-router";
@@ -19,7 +20,9 @@ class MainPage extends Component {
         classes: ['active', '', ''],
       },
       blog: {
-        contentelements: 0,
+        blogelements: [],
+        contentelements: [],
+        slider: [],
         url: [],
         imageurls: [],
         title: [],
@@ -34,6 +37,7 @@ class MainPage extends Component {
       loading: true,
       counter: 0,
       magnified: false,
+      leftposition: 0,
     }
   }
 
@@ -54,6 +58,16 @@ class MainPage extends Component {
         let elements = blog.contentelements;
         this.setState({loading: false})
 
+        let blogelements = blog.blogelements;
+
+        const createBlogObject = ({ title, text, url, imageUrl = '' }) => ({
+          title,
+          text,
+          url,
+          imageUrl,
+        });
+
+
         if (data[0]['included']) {
           data[0]['included'].map(obj =>{
             let imgurl = 'https://iroblog' +  obj['attributes']['uri']['url'];
@@ -72,30 +86,55 @@ class MainPage extends Component {
             blog.sumtext.push(sumtext)
           }
 
-          if (elem['relationships']['field_image']['data'] !== null) {
-            if (data[1]['included'][index] !== undefined) {
-              let blogImage = 'https://iroblog' + data[1]['included'][index]['attributes']['uri']['url'];
-              blog.imageurls.push(blogImage);
-            }
+          if (data[1]['included'][index] !== undefined) {
+            let blogImage = 'https://iroblog' + data[1]['included'][index]['attributes']['uri']['url'];
+            blog.imageurls.push(blogImage);
           } else {
             let blogImage = '';
             blog.imageurls.push(blogImage);
           }
 
-          blog.id.push('blog' + elements);
-
           if (index < 4) {
-            blog.renderedelements.push(index)
+            blog.renderedelements.push(index);
           }
+
+          if (index < 6) {
+            blog.slider.push(index);
+          }
+
+          blog.id.push(elem['id']);
         })
 
         blog.contentelements = data[1]['data'].length;
 
-         data[1]['data'].map(title => {
-           let sanitazedString = title['attributes']['title'].replace(/[^a-zA-Z ]/g, "").split(' ').join('_').toLowerCase()
-           blog.title.push(title['attributes']['title']);
+         data[1]['data'].map((element, index) => {
+           let sanitazedString = element['attributes']['title'].replace(/[^a-zA-Z ]/g, "").split(' ').join('_').toLowerCase();
+           let text = element['attributes']['body']['value'].substring(0, 255);
+           blog.title.push(element['attributes']['title']);
            blog.url.push(sanitazedString);
-        })
+
+           if (element['relationships']['field_image']['data']) {
+             data[1]['included'].forEach( e => {
+               if (element['relationships']['field_image']['data']['id'] === e['id']) {
+                 let blogImage = 'https://iroblog' + e['attributes']['uri']['url'];
+                 blog.blogelements.push(createBlogObject({
+                     title: element['attributes']['title'],
+                     text: text,
+                     url: sanitazedString,
+                     imageUrl: blogImage
+                   }
+                 ))
+               }
+             })
+           } else {
+             blog.blogelements.push(createBlogObject({
+                 title: element['attributes']['title'],
+                 text: text,
+                 url: sanitazedString,
+               }
+             ))
+           }
+         })
 
         for (let i = 0; i < elements; i++) {
           blog.splittedcontentelements.push(i);
@@ -107,7 +146,10 @@ class MainPage extends Component {
           blog.paginationelements.push(i)
         }
 
+
         this.setState({blog: blog})
+
+        console.log(this.state.blog.blogelements)
 
         if (data[2]['included']) {
           data[2]['included'].map(obj => {
@@ -171,12 +213,11 @@ class MainPage extends Component {
     this.setState({counter: counter});
   }
 
-  magnifiedToggle = () => {
-    let magnified = !this.state.magnified
-    console.log(magnified);
+    magnifiedToggle = () => {
+      let magnified = !this.state.magnified
 
-    this.setState({magnified: magnified});
-  }
+      this.setState({magnified: magnified});
+    }
 
    renderElements = (e, props) => {
      window.scrollTo(0, 0);
@@ -261,6 +302,13 @@ class MainPage extends Component {
                   clickedRight={this.rightClickHandler}/>
                   : null
                 }
+                <BlogSlider
+                  elements={this.state.blog.blogelements}
+                  id={this.state.blog.id}
+                  num={this.state.blog.slider}
+                  url={this.state.blog.url}
+                  leftposition={this.state.leftposition}
+                />
               </div>
               )}/>
           <Route path="/blog" render={() => (
