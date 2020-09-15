@@ -27,15 +27,13 @@ const BlogSlider =(props) => {
   const refContainer = useRef(0);
   const [leftPosition, setLeftPosition] = useState(90);
   const [counter, setCounter] = useState(0);
-  console.log(props.elements)
-
 
   let blogs = props.num.map((_, index) => {
     if (counter > 0 && counter === index ||  index === counter + 3) {
-      return <SliderCard key={props.elements[index]['title']} ref={refContainer} className="small">
+      return <SliderCard key={props.elements[index]['id']} ref={refContainer} className="small">
         <CardBlog
-          id={props.id[index]}
-          link={props.url[index]}
+          id={props.elements[index]['id']}
+          link={props.elements[index]['url']}
           title={props.elements[index]['title']}
           text={props.elements[index]['text']}
         />
@@ -44,13 +42,12 @@ const BlogSlider =(props) => {
       return <SliderCard key={props.elements[index]['title']} ref={refContainer}>
         <CardBlog
           id={props.id[index]}
-          link={props.url[index]}
+          link={props.elements[index]['url']}
           title={props.elements[index]['title']}
           text={props.elements[index]['text']}
         />
       </SliderCard>
     }
-
   })
 
   const slideRight = (left) => {

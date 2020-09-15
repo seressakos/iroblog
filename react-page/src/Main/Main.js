@@ -46,7 +46,7 @@ class MainPage extends Component {
       fetch('https://iroblog/jsonapi/node/swipe?include=field_swipe_image&fields[file--file]=uri',
         {'method': 'GET'},
       ),
-      fetch('https://iroblog/jsonapi/node/article?fields[node--article]=title,body,field_image&include=field_image&fields[file--file]=uri&sort=-nid', {'method': 'GET'}),
+      fetch('https://iroblog/jsonapi/node/article?fields[node--article]=title,body,field_image,drupal_internal__nid&include=field_image&fields[file--file]=uri&sort=-nid', {'method': 'GET'}),
       fetch('https://iroblog/jsonapi/node/home_page?fields[node--home_page]=body&include=field_hero&fields[file--file]=uri&sort=-nid', {'method': 'GET'}),
     ])
       .then (values => Promise.all(values.map(value => value.json())))
@@ -60,11 +60,12 @@ class MainPage extends Component {
 
         let blogelements = blog.blogelements;
 
-        const createBlogObject = ({ title, text, url, imageUrl = '' }) => ({
+        const createBlogObject = ({ title, text, url, imageUrl = '', id }) => ({
           title,
           text,
           url,
           imageUrl,
+          id,
         });
 
 
@@ -112,6 +113,7 @@ class MainPage extends Component {
            let text = element['attributes']['body']['value'].substring(0, 255);
            blog.title.push(element['attributes']['title']);
            blog.url.push(sanitazedString);
+           let id = `blog_${element['attributes']['drupal_internal__nid']}`;
 
            if (element['relationships']['field_image']['data']) {
              data[1]['included'].forEach( e => {
@@ -121,7 +123,8 @@ class MainPage extends Component {
                      title: element['attributes']['title'],
                      text: text,
                      url: sanitazedString,
-                     imageUrl: blogImage
+                     imageUrl: blogImage,
+                     id: id,
                    }
                  ))
                }
@@ -131,6 +134,7 @@ class MainPage extends Component {
                  title: element['attributes']['title'],
                  text: text,
                  url: sanitazedString,
+                 id: id,
                }
              ))
            }
@@ -148,8 +152,6 @@ class MainPage extends Component {
 
 
         this.setState({blog: blog})
-
-        console.log(this.state.blog.blogelements)
 
         if (data[2]['included']) {
           data[2]['included'].map(obj => {
