@@ -3,19 +3,20 @@ import {withRouter} from "react-router";
 import BlogTeaser from '../Node/BlogTeaser'
 
 const BlogBlock =(props) => {
-  let blogs = props.contentelements.map((elem, index) => {
+  let blogs = props.elementstorender.map((elem, index) => {
+
     return <BlogTeaser
-      key={index}
-      id={props.id[elem]}
-      link={props.url[elem]}
-      title={props.title[elem]}
-      imageurl={props.imageurl[elem]}
-      text={props.texts[elem]}
+      key={props.elements[elem]['id']}
+      id={props.elements[elem]['id']}
+      link={props.elements[elem]['url']}
+      title={props.elements[elem]['title']}
+      imageurl={props.elements[elem]['imageUrl']}
+      text={props.elements[elem]['sumText']}
     />
   })
 
   let paginations = props.pagination.map((elem, index) => {
-    return <li key={index}>
+    return <li key={elem}>
         <a href='/' id={elem} onClick={(e) =>props.renderHandler(e, props)}>{elem}</a>
       </li>
   })

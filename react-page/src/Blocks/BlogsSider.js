@@ -41,7 +41,7 @@ const BlogSlider =(props) => {
     } else {
       return <SliderCard key={props.elements[index]['title']} ref={refContainer}>
         <CardBlog
-          id={props.id[index]}
+          id={props.elements[index]['id']}
           link={props.elements[index]['url']}
           title={props.elements[index]['title']}
           text={props.elements[index]['text']}

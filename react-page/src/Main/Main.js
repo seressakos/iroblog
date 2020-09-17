@@ -21,15 +21,7 @@ class MainPage extends Component {
       },
       blog: {
         blogelements: [],
-        contentelements: [],
         slider: [],
-        url: [],
-        imageurls: [],
-        title: [],
-        sumtext: [],
-        texts: [],
-        id: [],
-        elementstorender: 3,
         renderedelements: [],
         splittedcontentelements : [],
         paginationelements: [],
@@ -55,17 +47,15 @@ class MainPage extends Component {
         const heroImageUrls = [];
         const blog = {...this.state.blog}
         const hero = {...this.state.hero}
-        let elements = blog.contentelements;
-        this.setState({loading: false})
+        let elements = blog.blogelements.length;
 
-        let blogelements = blog.blogelements;
-
-        const createBlogObject = ({ title, text, url, imageUrl = '', id }) => ({
+        const createBlogObject = ({ title, text, url, imageUrl = null, id, sumText }) => ({
           title,
           text,
           url,
           imageUrl,
           id,
+          sumText,
         });
 
 
@@ -81,20 +71,6 @@ class MainPage extends Component {
         data[1]['data'].map((elem, index)=> {
           elements ++;
 
-          if (elem['attributes']['body']) {
-            let sumtext = elem['attributes']['body']['value'].substring(0, 255);
-            blog.texts.push(elem['attributes']['body']['value']);
-            blog.sumtext.push(sumtext)
-          }
-
-          if (data[1]['included'][index] !== undefined) {
-            let blogImage = 'https://iroblog' + data[1]['included'][index]['attributes']['uri']['url'];
-            blog.imageurls.push(blogImage);
-          } else {
-            let blogImage = '';
-            blog.imageurls.push(blogImage);
-          }
-
           if (index < 4) {
             blog.renderedelements.push(index);
           }
@@ -102,17 +78,14 @@ class MainPage extends Component {
           if (index < 6) {
             blog.slider.push(index);
           }
-
-          blog.id.push(elem['id']);
         })
 
         blog.contentelements = data[1]['data'].length;
 
          data[1]['data'].map((element, index) => {
            let sanitazedString = element['attributes']['title'].replace(/[^a-zA-Z ]/g, "").split(' ').join('_').toLowerCase();
-           let text = element['attributes']['body']['value'].substring(0, 255);
-           blog.title.push(element['attributes']['title']);
-           blog.url.push(sanitazedString);
+           let text = element['attributes']['body']['value'];
+           let sumText = element['attributes']['body']['summary'];
            let id = `blog_${element['attributes']['drupal_internal__nid']}`;
 
            if (element['relationships']['field_image']['data']) {
@@ -125,6 +98,7 @@ class MainPage extends Component {
                      url: sanitazedString,
                      imageUrl: blogImage,
                      id: id,
+                     sumText: sumText,
                    }
                  ))
                }
@@ -135,6 +109,7 @@ class MainPage extends Component {
                  text: text,
                  url: sanitazedString,
                  id: id,
+                 sumText: sumText,
                }
              ))
            }
@@ -163,12 +138,14 @@ class MainPage extends Component {
 
           this.setState({hero: hero});
         }
+
+        this.setState({loading: false})
       })
   }
 
   menuHandler = () => {
     const blog = {...this.state.blog}
-    let contentelements = blog.contentelements;
+    let contentelements = blog.blogelements.length;
     const firstRenderedElements = [];
 
     for (let i = 0; i < contentelements - 1; i ++) {
@@ -243,7 +220,7 @@ class MainPage extends Component {
 
      // Check if we are on the last page. (If we have X content, the last
      // element is going to be X-1.
-     if (blog.contentelements-1 === lastRenderedElement) {
+     if (blog.blogelements.length - 1 === lastRenderedElement) {
        return false
      }
 
@@ -306,21 +283,15 @@ class MainPage extends Component {
                 }
                 <BlogSlider
                   elements={this.state.blog.blogelements}
-                  id={this.state.blog.id}
                   num={this.state.blog.slider}
-                  url={this.state.blog.url}
                   leftposition={this.state.leftposition}
                 />
               </div>
               )}/>
           <Route path="/blog" render={() => (
             <BlogBlock
-              imageurl={this.state.blog.imageurls}
-              title={this.state.blog.title}
-              texts={this.state.blog.sumtext}
-              id={this.state.blog.id}
-              contentelements = {this.state.blog.renderedelements}
-              url={this.state.blog.url}
+              elements={this.state.blog.blogelements}
+              elementstorender = {this.state.blog.renderedelements}
               renderHandler={this.renderElements}
               pagination={this.state.blog.paginationelements}
               rightarrowhandler={this.paginationArrowRight}
@@ -329,12 +300,7 @@ class MainPage extends Component {
           )}/>
           <Route path={'/:blogid'} render={() => (
             <BlogFull
-              imageurl={this.state.blog.imageurls}
-              title={this.state.blog.title}
-              texts={this.state.blog.texts}
-              id={this.state.blog.id}
-              contentelements = {this.state.blog.contentelements}
-              url={this.state.blog.url}
+              elements={this.state.blog.blogelements}
             />
           )}/>
         </div>
