@@ -21,7 +21,6 @@ class MainPage extends Component {
       },
       blog: {
         blogelements: [],
-        slider: [],
         renderedelements: [],
         splittedcontentelements : [],
         paginationelements: [],
@@ -71,12 +70,8 @@ class MainPage extends Component {
         data[1]['data'].map((elem, index)=> {
           elements ++;
 
-          if (index < 4) {
-            blog.renderedelements.push(index);
-          }
-
           if (index < 6) {
-            blog.slider.push(index);
+            blog.renderedelements.push(index);
           }
         })
 
@@ -119,7 +114,7 @@ class MainPage extends Component {
           blog.splittedcontentelements.push(i);
         }
 
-        let paginationElementNumber = Math.ceil(elements / 4);
+        let paginationElementNumber = Math.ceil(elements / 6);
 
         for (let i = 1; i < paginationElementNumber + 1; i++) {
           blog.paginationelements.push(i)
@@ -149,7 +144,7 @@ class MainPage extends Component {
     const firstRenderedElements = [];
 
     for (let i = 0; i < contentelements - 1; i ++) {
-      if (i < 4) {
+      if (i < 6) {
         firstRenderedElements.push(i)
       }
     }
@@ -203,8 +198,8 @@ class MainPage extends Component {
      e.preventDefault();
 
      const blog = {...this.state.blog}
-     let sliceEnd = e.target.id * 4;
-     let sliceStart = sliceEnd - 4;
+     let sliceEnd = e.target.id * 6;
+     let sliceStart = sliceEnd - 6;
 
      blog.renderedelements = blog.splittedcontentelements.slice(sliceStart, sliceEnd);
 
@@ -216,7 +211,7 @@ class MainPage extends Component {
      const blog = {...this.state.blog};
      let lastRenderedElement = blog.renderedelements[blog.renderedelements.length - 1];
      let sliceStart = lastRenderedElement + 1;
-     let sliceEnd = sliceStart + 4;
+     let sliceEnd = sliceStart + 6;
 
      // Check if we are on the last page. (If we have X content, the last
      // element is going to be X-1.
@@ -233,7 +228,7 @@ class MainPage extends Component {
     window.scrollTo(0, 0);
     const blog = {...this.state.blog};
     let sliceEnd = blog.renderedelements[0];
-    let sliceStart = sliceEnd - 4;
+    let sliceStart = sliceEnd - 6;
 
 
     if (blog.renderedelements[0] === 0) {
@@ -283,7 +278,7 @@ class MainPage extends Component {
                 }
                 <BlogSlider
                   elements={this.state.blog.blogelements}
-                  num={this.state.blog.slider}
+                  num={this.state.blog.renderedelements}
                   leftposition={this.state.leftposition}
                 />
               </div>
