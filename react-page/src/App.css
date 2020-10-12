@@ -69,3 +69,19 @@ h2  {
 .small {
   filter: blur(3px);
 }
+
+h4 {
+  color: #EA4505;
+  font-size: 20px;
+  font-family: 'Muli Regular';
+}
+
+p {
+  color: #607D8B;
+}
+
+
+a {
+  font-family: 'Muli Bold';
+  color: #008089;
+}

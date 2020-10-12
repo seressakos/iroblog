@@ -7,6 +7,7 @@ import MyBook from '../Blocks/MyBooks'
 import BlogSlider from '../Blocks/BlogsSider'
 import BlogFull from "../Node/BlogFull";
 import About from '../Blocks/About';
+import ReceptionBlock from "../Blocks/ReceptionBlock";
 import {Route} from "react-router";
 
 class MainPage extends Component {
@@ -37,7 +38,7 @@ class MainPage extends Component {
       fetch('https://iroblog/jsonapi/node/swipe?include=field_swipe_image&fields[file--file]=uri',
         {'method': 'GET'},
       ),
-      fetch('https://iroblog/jsonapi/node/article?fields[node--article]=title,body,field_image,drupal_internal__nid&include=field_image&fields[file--file]=uri&sort=-nid', {'method': 'GET'}),
+      fetch('https://iroblog/jsonapi/node/article?fields[node--article]=created,author,title,body,field_image,drupal_internal__nid&include=field_image&fields[file--file]=uri&sort=-nid', {'method': 'GET'}),
       fetch('https://iroblog/jsonapi/node/home_page?fields[node--home_page]=body&include=field_hero&fields[file--file]=uri&sort=-nid', {'method': 'GET'}),
     ])
       .then (values => Promise.all(values.map(value => value.json())))
@@ -48,13 +49,14 @@ class MainPage extends Component {
         const hero = {...this.state.hero}
         let elements = blog.blogelements.length;
 
-        const createBlogObject = ({ title, text, url, imageUrl = null, id, sumText }) => ({
+        const createBlogObject = ({ title, text, url, imageUrl = null, id, sumText, created }) => ({
           title,
           text,
           url,
           imageUrl,
           id,
           sumText,
+          created,
         });
 
 
@@ -82,6 +84,7 @@ class MainPage extends Component {
            let text = element['attributes']['body']['value'];
            let sumText = element['attributes']['body']['summary'];
            let id = `blog_${element['attributes']['drupal_internal__nid']}`;
+           let createdDate = element['attributes']['created'].slice(0, 10).replace(/-/g, '/');
 
            if (element['relationships']['field_image']['data']) {
              data[1]['included'].forEach( e => {
@@ -94,6 +97,7 @@ class MainPage extends Component {
                      imageUrl: blogImage,
                      id: id,
                      sumText: sumText,
+                     created: createdDate,
                    }
                  ))
                }
@@ -105,6 +109,7 @@ class MainPage extends Component {
                  url: sanitazedString,
                  id: id,
                  sumText: sumText,
+                 created: createdDate,
                }
              ))
            }
@@ -281,6 +286,7 @@ class MainPage extends Component {
                   num={this.state.blog.renderedelements}
                   leftposition={this.state.leftposition}
                 />
+                <ReceptionBlock/>
               </div>
               )}/>
           <Route path="/blog" render={() => (

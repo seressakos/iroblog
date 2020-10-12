@@ -1,14 +1,37 @@
 import React, { Component } from 'react';
 import {Link} from "react-router-dom";
+import styled, {css} from 'styled-components';
+
+const Card = styled.div`
+ height: 100%;
+ display: flex;
+ flex-direction: column;
+`
+
+const Li = styled.li`
+  margin: 0 15px;
+  
+  a {
+    color: #EA4505;
+    text-decoration: none;
+    font-family: 'Muli Bold';
+  }
+`
+
+const Text = styled.div`
+ flex-grow: 1;
+ flex-shrink: 0;
+ color: #607D8B;
+`
 
 const CardBlog = (props) => {
   return (
-    <div id={props.id}>
-      <Link to={props.link}>
-        <h1>{props.title}</h1>
-      </Link>
-      {props.text ? <div dangerouslySetInnerHTML={{ __html: props.text }}></div> : null}
-    </div>
+    <Card id={props.id}>
+      <h1>{props.title}</h1>
+      <p>{props.created}</p>
+      {props.text ? <Text dangerouslySetInnerHTML={{ __html: props.text }}></Text> : null}
+      <Link to={props.link}>Tovabb</Link>
+    </Card>
   )
 }
 

@@ -53,7 +53,6 @@ const MyBook =(props) => {
       })
   }, []);
 
-
   if (urls || texts) {
     return (
       <BookBlock>

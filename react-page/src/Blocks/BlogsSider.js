@@ -4,6 +4,8 @@ import styled, {css} from 'styled-components';
 
 const SliderBlock = styled.div`
   background-color: #E5F2F3;
+  padding-top: 50px;
+  padding-bottom: 140px;
   
   .arrow-wrapper {
     display: flex;
@@ -24,6 +26,10 @@ const SlideContainer = styled.div`
   transition: left 0.5s;
   padding: 0 30px;
   
+  @media (max-width: 900px) {
+    padding: 0;
+  }
+  
   @media (min-width: 1200px) {
     padding-left: 120px;
     padding-right: 0;
@@ -31,12 +37,16 @@ const SlideContainer = styled.div`
 `;
 
 const SliderCard = styled.div`
-  min-width: calc(100% - 30px);
+  min-width: calc(100% - 60px);
+  background: white;
   padding: 30px;
+  border-radius: 3px;
+  box-shadow: 0px 0px 10px rgba(5, 93, 107, 0.2);
   
   @media (min-width: 900px) {
-    min-width: calc(100% / 12 * 3);
-    max-width: calc(100% / 12 * 3);
+    min-width: calc(100% / 12 * 3 - 30px);
+    max-width: calc(100% / 12 * 3 - 30px);
+    margin: 0 15px;
   }
 `;
 
@@ -83,7 +93,8 @@ const BlogSlider =(props) => {
           id={props.elements[index]['id']}
           link={props.elements[index]['url']}
           title={props.elements[index]['title']}
-          text={props.elements[index]['text']}
+          text={props.elements[index]['sumText']}
+          created={props.elements[index]['created']}
         />
       </SliderCard>
     } else {
@@ -92,7 +103,8 @@ const BlogSlider =(props) => {
           id={props.elements[index]['id']}
           link={props.elements[index]['url']}
           title={props.elements[index]['title']}
-          text={props.elements[index]['text']}
+          text={props.elements[index]['sumText']}
+          created={props.elements[index]['created']}
         />
       </SliderCard>
     }
