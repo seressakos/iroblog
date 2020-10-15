@@ -2,6 +2,9 @@ import React, { useState, useEffect  } from 'react';
 import ReceptioItem from "../Node/Reception";
 import styled, {css} from 'styled-components';
 
+const ReceptionSection = styled.div`
+`
+
 const Block = styled.div`
   display: flex;
   flex-direction: column;
@@ -44,7 +47,6 @@ const ReceptionBlock =(props) => {
         let nodeArray = [];
 
         data[0]['data'].map((element, index) => {
-          console.log(element)
           let text = element['attributes']['body'] ? element['attributes']['body']['value'] : null;
           let url = element['attributes']['field_link'] ? element['attributes']['field_link']['uri'] : null;
           let id = element['id'];
@@ -103,7 +105,7 @@ const ReceptionBlock =(props) => {
     }
 
     return (
-      <div>
+      <ReceptionSection>
         <div className="container">
           <Title>Hirek rolam</Title>
           <Block>
@@ -123,7 +125,7 @@ const ReceptionBlock =(props) => {
             </MoreButtonWrapper>
             : null }
         </div>
-      </div>
+      </ReceptionSection>
     );
   }
 

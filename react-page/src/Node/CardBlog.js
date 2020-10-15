@@ -27,7 +27,7 @@ const Text = styled.div`
 const CardBlog = (props) => {
   return (
     <Card id={props.id}>
-      <h1>{props.title}</h1>
+      <h3>{props.title}</h3>
       <p>{props.created}</p>
       {props.text ? <Text dangerouslySetInnerHTML={{ __html: props.text }}></Text> : null}
       <Link to={props.link}>Tovabb</Link>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Header from '../Blocks/Header'
 import HeroBlock from '../Blocks/HeroBlock'
-import SwiperBlock from '../Blocks/SwiperBlock'
+import VideoBlock from '../Blocks/VideoBlock'
 import BlogBlock from '../Blocks/BlogBlock'
 import MyBook from '../Blocks/MyBooks'
 import BlogSlider from '../Blocks/BlogsSider'
@@ -14,7 +14,6 @@ class MainPage extends Component {
   constructor(props) {
     super();
     this.state = {
-      url: '',
       urls: [],
       hero : {
         urls: [],
@@ -35,9 +34,6 @@ class MainPage extends Component {
 
   componentDidMount() {
     Promise.all([
-      fetch('https://iroblog/jsonapi/node/swipe?include=field_swipe_image&fields[file--file]=uri',
-        {'method': 'GET'},
-      ),
       fetch('https://iroblog/jsonapi/node/article?fields[node--article]=created,author,title,body,field_image,drupal_internal__nid&include=field_image&fields[file--file]=uri&sort=-nid', {'method': 'GET'}),
       fetch('https://iroblog/jsonapi/node/home_page?fields[node--home_page]=body&include=field_hero&fields[file--file]=uri&sort=-nid', {'method': 'GET'}),
     ])
@@ -59,17 +55,7 @@ class MainPage extends Component {
           created,
         });
 
-
-        if (data[0]['included']) {
-          data[0]['included'].map(obj =>{
-            let imgurl = 'https://iroblog' +  obj['attributes']['uri']['url'];
-            urls.push(imgurl);
-          })
-
-          this.setState({urls: urls})
-        }
-
-        data[1]['data'].map((elem, index)=> {
+        data[0]['data'].map((elem, index)=> {
           elements ++;
 
           if (index < 6) {
@@ -79,7 +65,7 @@ class MainPage extends Component {
 
         blog.contentelements = data[1]['data'].length;
 
-         data[1]['data'].map((element, index) => {
+         data[0]['data'].map((element, index) => {
            let sanitazedString = element['attributes']['title'].replace(/[^a-zA-Z ]/g, "").split(' ').join('_').toLowerCase();
            let text = element['attributes']['body']['value'];
            let sumText = element['attributes']['body']['summary'];
@@ -87,7 +73,7 @@ class MainPage extends Component {
            let createdDate = element['attributes']['created'].slice(0, 10).replace(/-/g, '/');
 
            if (element['relationships']['field_image']['data']) {
-             data[1]['included'].forEach( e => {
+             data[0]['included'].forEach( e => {
                if (element['relationships']['field_image']['data']['id'] === e['id']) {
                  let blogImage = 'https://iroblog' + e['attributes']['uri']['url'];
                  blog.blogelements.push(createBlogObject({
@@ -128,8 +114,8 @@ class MainPage extends Component {
 
         this.setState({blog: blog})
 
-        if (data[2]['included']) {
-          data[2]['included'].map(obj => {
+        if (data[1]['included']) {
+          data[1]['included'].map(obj => {
             let imgurl = 'https://iroblog' +  obj['attributes']['uri']['url'];
             heroImageUrls.push(imgurl);
           })
@@ -270,17 +256,7 @@ class MainPage extends Component {
                 }
                 <About/>
                 <MyBook/>
-                {
-                  this.state.urls[0] ?
-                  <SwiperBlock
-                  counter={this.state.counter}
-                  urls={this.state.urls}
-                  magnify={this.magnifiedToggle}
-                  magnified={this.state.magnified}
-                  clickedLeft={this.leftClickHandler}
-                  clickedRight={this.rightClickHandler}/>
-                  : null
-                }
+                <VideoBlock/>
                 <BlogSlider
                   elements={this.state.blog.blogelements}
                   num={this.state.blog.renderedelements}

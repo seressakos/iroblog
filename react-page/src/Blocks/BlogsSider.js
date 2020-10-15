@@ -53,24 +53,15 @@ const SliderCard = styled.div`
 const ArrowWrapper = styled.div`
   display: flex;
   
-  .arrow {
-    background: url('/right.svg') center no-repeat;
-    width: 32px;
-    height: 32px;
+  svg {
+    cursor: pointer;
     padding: 0 10px;
   }
   
-  .arrow-right--inactive {
-    background: url('/right-inactive.svg') center no-repeat;
-  }
-  
-  .arrow-left {
-    transform: rotate(180deg);
-  }
-  
-  .arrow-left--inactive {
-    background: url('/right-inactive.svg') center no-repeat;
-    transform: rotate(180deg);
+  .active:hover {
+   circle {
+     fill: #008089;
+   }
   }
 `;
 
@@ -130,16 +121,34 @@ const BlogSlider =(props) => {
         <h2>Blog</h2>
         <ArrowWrapper>
           {
-            counter <= 0 ? <div className="arrow arrow-left--inactive"></div>
-              : <div className="arrow arrow-left" onClick={()=>{slideLeft(leftPosition)}}></div>
+            counter <= 0 ?  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="16" cy="16" r="16" fill="#B0BEC5"/>
+                <path d="M17 22L11 16L17 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              : <svg className="active" onClick={()=>{slideLeft(leftPosition)}} width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" >
+                <circle cx="16" cy="16" r="16" fill="#99CCD0"/>
+                <path d="M17 22L11 16L17 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
           }
           {
             windowWidth > 900 ?
-              counter >= props.num.length - 3 ? <div className="arrow arrow-right--inactive"></div>  :
-                <div className="arrow arrow-right" onClick={()=>{slideRight(leftPosition)}}></div>
+              counter >= props.num.length - 3 ? <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="16" fill="#B0BEC5"/>
+                  <path d="M13 22L19 16L13 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>   :
+                <svg className="active" onClick={()=>{slideRight(leftPosition)}}  width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="16" fill="#99CCD0"/>
+                  <path d="M13 22L19 16L13 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
               :
-              counter >= props.num.length - 1 ? <div className="arrow arrow-right--inactive"></div>  :
-                <div className="arrow arrow-right" onClick={()=>{slideRight(leftPosition)}}></div>
+              counter >= props.num.length - 1 ? <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="16" fill="#B0BEC5"/>
+                  <path d="M13 22L19 16L13 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg> :
+                <svg className="active" onClick={()=>{slideRight(leftPosition)}}  width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="16" fill="#99CCD0"/>
+                  <path d="M13 22L19 16L13 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
           }
         </ArrowWrapper>
       </div>
