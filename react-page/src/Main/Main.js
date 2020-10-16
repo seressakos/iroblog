@@ -8,6 +8,7 @@ import BlogSlider from '../Blocks/BlogsSider'
 import BlogFull from "../Node/BlogFull";
 import About from '../Blocks/About';
 import ReceptionBlock from "../Blocks/ReceptionBlock";
+import SocialMedia from "../Blocks/SocialMedia";
 import {Route} from "react-router";
 
 class MainPage extends Component {
@@ -263,6 +264,7 @@ class MainPage extends Component {
                   leftposition={this.state.leftposition}
                 />
                 <ReceptionBlock/>
+                <SocialMedia/>
               </div>
               )}/>
           <Route path="/blog" render={() => (

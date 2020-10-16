@@ -126,21 +126,21 @@ const VideoBlock = (props) => {
            {
              counter <= 0 ? <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                  <circle cx="16" cy="16" r="16" fill="#B0BEC5"/>
-                 <path d="M17 22L11 16L17 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                 <path d="M17 22L11 16L17 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                </svg>
                : <svg className="active" onClick={()=>{slideLeft(leftPosition)}} width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" >
                  <circle cx="16" cy="16" r="16" fill="#99CCD0"/>
-                 <path d="M17 22L11 16L17 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                 <path d="M17 22L11 16L17 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                </svg>
            }
            {
              counter >= videos.length - 1 ? <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                  <circle cx="16" cy="16" r="16" fill="#B0BEC5"/>
-                 <path d="M13 22L19 16L13 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                 <path d="M13 22L19 16L13 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                </svg>  :
                  <svg className="active" onClick={()=>{slideRight(leftPosition)}}  width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                    <circle cx="16" cy="16" r="16" fill="#99CCD0"/>
-                   <path d="M13 22L19 16L13 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                   <path d="M13 22L19 16L13 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                  </svg>
            }
          </ArrowWrapper>

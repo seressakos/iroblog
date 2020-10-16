@@ -41,6 +41,11 @@ const CardBody = styled.div`
    .text-wrapper {
     max-width: calc(100% / 12 * 8);
     padding-right: 30px;
+    
+   @media (max-width: 900px) {
+    max-width: 100%;
+    padding: 30px;
+   }
   }
 `
 
@@ -54,9 +59,9 @@ const ReceptioItem =({imageUrl, title, text, url}) => {
     <CardWrapper>
       <CardInner>
         <CardBody>
-          <div className="image-wrapper">
+          {window.innerWidth > 600 ?  <div className="image-wrapper">
             {imageUrl ?  <img src={imageUrl} width='180' height='275'/> : null}
-          </div>
+          </div> : null}
           <div className="text-wrapper">
             <h4>{title}</h4>
             {text ? <div dangerouslySetInnerHTML={{ __html: text }}></div> : null}

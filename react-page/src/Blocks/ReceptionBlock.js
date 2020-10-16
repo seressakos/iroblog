@@ -23,6 +23,7 @@ const MoreButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   padding: 30px 0;
+
 `
 
 const ReceptionBlock =(props) => {

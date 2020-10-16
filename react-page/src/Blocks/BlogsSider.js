@@ -38,16 +38,31 @@ const SlideContainer = styled.div`
 
 const SliderCard = styled.div`
   min-width: calc(100% - 60px);
-  background: white;
   padding: 30px;
-  border-radius: 3px;
-  box-shadow: 0px 0px 10px rgba(5, 93, 107, 0.2);
+  
+  > div {
+   background: white;
+   padding: 20px;
+   border-radius: 3px;
+   box-shadow: 0px 0px 10px rgba(5, 93, 107, 0.2);
+  }
   
   @media (min-width: 900px) {
+    background: white;
     min-width: calc(100% / 12 * 3 - 30px);
     max-width: calc(100% / 12 * 3 - 30px);
     margin: 0 15px;
+    border-radius: 3px;
+    box-shadow: 0px 0px 10px rgba(5, 93, 107, 0.2);
+    
+    > div {
+     background: inherit;
+     padding: 0;
+     border-radius: none;
+     box-shadow: none;
   }
+  }
+ 
 `;
 
 const ArrowWrapper = styled.div`
@@ -123,31 +138,31 @@ const BlogSlider =(props) => {
           {
             counter <= 0 ?  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="16" cy="16" r="16" fill="#B0BEC5"/>
-                <path d="M17 22L11 16L17 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M17 22L11 16L17 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
               : <svg className="active" onClick={()=>{slideLeft(leftPosition)}} width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" >
                 <circle cx="16" cy="16" r="16" fill="#99CCD0"/>
-                <path d="M17 22L11 16L17 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M17 22L11 16L17 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
           }
           {
             windowWidth > 900 ?
               counter >= props.num.length - 3 ? <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="16" cy="16" r="16" fill="#B0BEC5"/>
-                  <path d="M13 22L19 16L13 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M13 22L19 16L13 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>   :
                 <svg className="active" onClick={()=>{slideRight(leftPosition)}}  width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="16" cy="16" r="16" fill="#99CCD0"/>
-                  <path d="M13 22L19 16L13 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M13 22L19 16L13 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               :
               counter >= props.num.length - 1 ? <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="16" cy="16" r="16" fill="#B0BEC5"/>
-                  <path d="M13 22L19 16L13 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M13 22L19 16L13 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg> :
                 <svg className="active" onClick={()=>{slideRight(leftPosition)}}  width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="16" cy="16" r="16" fill="#99CCD0"/>
-                  <path d="M13 22L19 16L13 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M13 22L19 16L13 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
           }
         </ArrowWrapper>
