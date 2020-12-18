@@ -26,7 +26,7 @@ const SlideContainer = styled.div`
   transition: left 0.5s;
   padding: 0 30px;
   
-  @media (max-width: 900px) {
+  @media (max-width: 1200px) {
     padding: 0;
   }
   
@@ -47,7 +47,7 @@ const SliderCard = styled.div`
    box-shadow: 0px 0px 10px rgba(5, 93, 107, 0.2);
   }
   
-  @media (min-width: 900px) {
+  @media (min-width: 1200px) {
     background: white;
     min-width: calc(100% / 12 * 3 - 30px);
     max-width: calc(100% / 12 * 3 - 30px);

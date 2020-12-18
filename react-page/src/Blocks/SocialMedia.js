@@ -3,6 +3,7 @@ import styled, {css} from 'styled-components';
 
 const SocialMediaSection = styled.div`
  background-color: #FFF2E6;
+ padding: 30px 0 120px 0;
  
  .container {
     display: flex;
@@ -41,6 +42,10 @@ const SocialMediaBlock = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  
+  h3 {
+   margin: 30px 0;
+  }
   
   @media (min-width: 900px) {
    max-width: 50% - 30px;
@@ -148,7 +153,7 @@ const SocialMedia = () => {
                 }
             </div>
             <div className="social-link">
-              <a href="/">Tovabb a facebookra</a>
+              <a href="/">Tovább a facebookra</a>
             </div>
           </SocialMediaBlock>
           <SocialMediaBlock>
@@ -179,7 +184,7 @@ const SocialMedia = () => {
               }
             </div>
             <div className="social-link">
-              <a href="/">Tovabb a linkedinre</a>
+              <a href="/">Tovább a linkedinre</a>
             </div>
           </SocialMediaBlock>
         </div>

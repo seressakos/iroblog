@@ -92,3 +92,14 @@ a {
   font-family: 'Muli Bold';
   color: #008089;
 }
+
+.responsive {
+  max-width: 100%;
+  min-width: 100%;
+  height: auto;
+  display: block;
+}
+
+p {
+  line-height: 24px;
+}

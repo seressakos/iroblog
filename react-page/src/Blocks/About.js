@@ -13,7 +13,7 @@ const InnerWrapper = styled.div`
   padding-top: 70px;
   padding-bottom: 35px;
   
-  @media (min-width: 900px) {
+  @media (min-width: 996px) {
     flex-direction: row;
   }
 `;
@@ -21,7 +21,7 @@ const InnerWrapper = styled.div`
 const TextWrapper = styled.div`
    width: auto;
    
-   @media (min-width: 900px) {
+   @media (min-width: 996px) {
      max-width: calc(100% / 12 * 8);
    }
 `;
@@ -29,7 +29,7 @@ const TextWrapper = styled.div`
 const ImageWrapper = styled.div`
   width: auto;
   
-  @media (min-width: 900px) {
+  @media (min-width: 996px) {
     margin-left: 60px;
     max-width: calc(100% / 12 * 4 - 60px);
   }

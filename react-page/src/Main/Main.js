@@ -7,6 +7,7 @@ import MyBook from '../Blocks/MyBooks'
 import BlogSlider from '../Blocks/BlogsSider'
 import BlogFull from "../Node/BlogFull";
 import About from '../Blocks/About';
+import Footer from "../Blocks/Footer";
 import ReceptionBlock from "../Blocks/ReceptionBlock";
 import SocialMedia from "../Blocks/SocialMedia";
 import {Route} from "react-router";
@@ -179,12 +180,6 @@ class MainPage extends Component {
     this.setState({counter: counter});
   }
 
-    magnifiedToggle = () => {
-      let magnified = !this.state.magnified
-
-      this.setState({magnified: magnified});
-    }
-
    renderElements = (e, props) => {
      window.scrollTo(0, 0);
      e.preventDefault();
@@ -282,6 +277,7 @@ class MainPage extends Component {
               elements={this.state.blog.blogelements}
             />
           )}/>
+          <Footer/>
         </div>
       )
     }

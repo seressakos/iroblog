@@ -5,7 +5,7 @@ const CardWrapper = styled.div`
   max-width: 100%;
   margin: 0 30px;
   
-  @media (min-width: 900px) {
+  @media (min-width: 1200px) {
     max-width: calc(50% - 60px);
   }
   
@@ -42,7 +42,7 @@ const CardBody = styled.div`
     max-width: calc(100% / 12 * 8);
     padding-right: 30px;
     
-   @media (max-width: 900px) {
+   @media (max-width: 1200px) {
     max-width: 100%;
     padding: 30px;
    }
@@ -68,7 +68,7 @@ const ReceptioItem =({imageUrl, title, text, url}) => {
           </div>
         </CardBody>
         <CardFooter>
-          <a href={url}>Tovabb a cikre</a>
+          <a href={url}>Tovább a cikre</a>
         </CardFooter>
       </CardInner>
     </CardWrapper>

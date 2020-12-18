@@ -3,6 +3,7 @@ import ReceptioItem from "../Node/Reception";
 import styled, {css} from 'styled-components';
 
 const ReceptionSection = styled.div`
+  padding: 30px;
 `
 
 const Block = styled.div`
@@ -10,7 +11,7 @@ const Block = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
   
-  @media (min-width: 900px) {
+  @media (min-width: 1200px) {
     flex-direction: row;
   }
 `;
@@ -23,7 +24,6 @@ const MoreButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   padding: 30px 0;
-
 `
 
 const ReceptionBlock =(props) => {

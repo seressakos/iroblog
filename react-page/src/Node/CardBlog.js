@@ -18,7 +18,7 @@ const Li = styled.li`
   }
 `
 
-const Text = styled.div`
+const Text = styled.p`
  flex-grow: 1;
  flex-shrink: 0;
  color: #607D8B;
@@ -30,7 +30,7 @@ const CardBlog = (props) => {
       <h3>{props.title}</h3>
       <p>{props.created}</p>
       {props.text ? <Text dangerouslySetInnerHTML={{ __html: props.text }}></Text> : null}
-      <Link to={props.link}>Tovabb</Link>
+      <Link to={props.link}>Tovább</Link>
     </Card>
   )
 }
