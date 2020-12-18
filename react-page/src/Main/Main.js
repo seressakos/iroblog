@@ -24,7 +24,6 @@ class MainPage extends Component {
       blog: {
         blogelements: [],
         renderedelements: [],
-        splittedcontentelements : [],
         paginationelements: [],
       },
       loading: true,
@@ -60,10 +59,12 @@ class MainPage extends Component {
         data[0]['data'].map((elem, index)=> {
           elements ++;
 
-          if (index < 6) {
+          if (index < Math.min(data[0]['data'].length, 6)) {
             blog.renderedelements.push(index);
           }
         })
+
+
 
         blog.contentelements = data[1]['data'].length;
 
@@ -102,10 +103,6 @@ class MainPage extends Component {
              ))
            }
          })
-
-        for (let i = 0; i < elements; i++) {
-          blog.splittedcontentelements.push(i);
-        }
 
         let paginationElementNumber = Math.ceil(elements / 6);
 
@@ -180,53 +177,6 @@ class MainPage extends Component {
     this.setState({counter: counter});
   }
 
-   renderElements = (e, props) => {
-     window.scrollTo(0, 0);
-     e.preventDefault();
-
-     const blog = {...this.state.blog}
-     let sliceEnd = e.target.id * 6;
-     let sliceStart = sliceEnd - 6;
-
-     blog.renderedelements = blog.splittedcontentelements.slice(sliceStart, sliceEnd);
-
-     this.setState({blog: blog})
-   }
-
-   paginationArrowRight = () => {
-     window.scrollTo(0, 0);
-     const blog = {...this.state.blog};
-     let lastRenderedElement = blog.renderedelements[blog.renderedelements.length - 1];
-     let sliceStart = lastRenderedElement + 1;
-     let sliceEnd = sliceStart + 6;
-
-     // Check if we are on the last page. (If we have X content, the last
-     // element is going to be X-1.
-     if (blog.blogelements.length - 1 === lastRenderedElement) {
-       return false
-     }
-
-     blog.renderedelements = blog.splittedcontentelements.slice(sliceStart, sliceEnd);
-
-     this.setState({blog: blog})
-   }
-
-  paginationArrowLeft = () => {
-    window.scrollTo(0, 0);
-    const blog = {...this.state.blog};
-    let sliceEnd = blog.renderedelements[0];
-    let sliceStart = sliceEnd - 6;
-
-
-    if (blog.renderedelements[0] === 0) {
-      return false
-    }
-
-    blog.renderedelements = blog.splittedcontentelements.slice(sliceStart, sliceEnd);
-
-    this.setState({blog: blog})
-  }
-
   render() {
     if (this.state.loading) {
       return (
@@ -255,7 +205,6 @@ class MainPage extends Component {
                 <VideoBlock/>
                 <BlogSlider
                   elements={this.state.blog.blogelements}
-                  num={this.state.blog.renderedelements}
                   leftposition={this.state.leftposition}
                 />
                 <ReceptionBlock/>
@@ -266,10 +215,7 @@ class MainPage extends Component {
             <BlogBlock
               elements={this.state.blog.blogelements}
               elementstorender = {this.state.blog.renderedelements}
-              renderHandler={this.renderElements}
               pagination={this.state.blog.paginationelements}
-              rightarrowhandler={this.paginationArrowRight}
-              leftarrowhandler={this.paginationArrowLeft}
             />
           )}/>
           <Route path={'/:blogid'} render={() => (

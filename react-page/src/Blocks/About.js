@@ -64,7 +64,7 @@ class About extends Component {
             text = elem['attributes']['body']['value'];
           }
 
-          if (elem['relationships']['field_profile_image']) {
+          if (elem['relationships']['field_profile_image']['data']) {
             alt = elem['relationships']['field_profile_image']['data']['meta']['alt'];
           }
         })

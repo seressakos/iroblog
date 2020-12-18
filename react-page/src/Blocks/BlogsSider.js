@@ -86,13 +86,24 @@ const BlogSlider =(props) => {
   const [counter, setCounter] = useState(0);
   const [windowWidth, setWindowWidth] = useState();
   const [cardWidth, setcardWidth] = useState();
+  const [elementsTorender, setElementsTorender] = useState([]);
+  const [hasMounted, setHasmounted] = useState(false);
 
   useEffect(()=> {
-    setWindowWidth(window.innerWidth);
-    setcardWidth(refContainer.current.offsetWidth)
-  },[])
+    let elements = [];
+    props.elements.forEach((_, index) => {
+      if (index < 6) {
+        elements.push(index);
+      }
+    });
 
-  let blogs = props.num.map((_, index) => {
+    setHasmounted(true);
+    setElementsTorender(elements);
+    setWindowWidth(window.innerWidth);
+    setcardWidth(refContainer.current.offsetWidth);
+  },[hasMounted]);
+
+  let blogs = elementsTorender.map((_, index) => {
     if (windowWidth > 900 && counter > 0 && index === counter - 1 || index === counter + 3) {
       return <SliderCard key={props.elements[index]['id']} ref={refContainer} className="small">
         <CardBlog
@@ -147,7 +158,7 @@ const BlogSlider =(props) => {
           }
           {
             windowWidth > 900 ?
-              counter >= props.num.length - 3 ? <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              counter >= elementsTorender.length - 3 ? <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="16" cy="16" r="16" fill="#B0BEC5"/>
                   <path d="M13 22L19 16L13 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>   :
@@ -156,7 +167,7 @@ const BlogSlider =(props) => {
                   <path d="M13 22L19 16L13 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               :
-              counter >= props.num.length - 1 ? <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              counter >= elementsTorender.length - 1 ? <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="16" cy="16" r="16" fill="#B0BEC5"/>
                   <path d="M13 22L19 16L13 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg> :

@@ -104,25 +104,28 @@ const SocialMedia = () => {
 
   useEffect(() => {
     Promise.all([
-      fetch('https://iroblog/jsonapi/node/instagram?fields[node--videos]=title,field_mp4,drupal_internal__nid&include=field_mp4&fields[file--file]=uri&sort=-nid', {'method': 'GET'}),
-      fetch('https://iroblog/jsonapi/node/instagram?fields[node--videos]=title,field_facebook,drupal_internal__nid&include=field_facebook&fields[file--file]=uri&sort=-nid', {'method': 'GET'}),
+      fetch('https://iroblog/jsonapi/node/instagram?fields[node--instagram]=title,field_mp4,drupal_internal__nid&include=field_mp4&fields[file--file]=uri&sort=-nid', {'method': 'GET'}),
+      fetch('https://iroblog/jsonapi/node/instagram?fields[node--instagram]=title,field_facebook,drupal_internal__nid&include=field_facebook&fields[file--file]=uri&sort=-nid', {'method': 'GET'}),
     ])
       .then (values => Promise.all(values.map(value => value.json())))
       .then(data => {
         let instaUrlArray = [];
         let facebookUrlArray = [];
 
-        data['0']['included'].map((element) => {
-          let url = 'https://iroblog' + element['attributes']['uri']['url'];
-          instaUrlArray.push(url);
-        });
 
-        data['1']['included'].map((element) => {
-          let imageUrl = 'https://iroblog' + element['attributes']['uri']['url'];
-          facebookUrlArray.push(imageUrl);
-        })
+        if (data['0']['included']) {
+          data['0']['included'].map((element) => {
+            let url = 'https://iroblog' + element['attributes']['uri']['url'];
+            instaUrlArray.push(url);
+          });
+        }
 
-
+        if (data['1']['included']) {
+          data['1']['included'].map((element) => {
+            let imageUrl = 'https://iroblog' + element['attributes']['uri']['url'];
+            facebookUrlArray.push(imageUrl);
+          })
+        }
 
         setUrls(instaUrlArray.reverse());
         setFacebookUrls(facebookUrlArray.reverse());

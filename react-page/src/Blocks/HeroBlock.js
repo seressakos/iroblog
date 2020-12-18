@@ -24,5 +24,3 @@ class heroBlock extends Component {
 }
 
 export default heroBlock;
-
-//
