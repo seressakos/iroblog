@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import ReactPlayer from "react-player";
 import styled, {css} from 'styled-components';
+import {jsonAPI} from "../system/Url.js";
 
 const VideoBlockWrapper = styled.div`
   background: no-repeat url('/swiper-background.png');
@@ -67,7 +68,7 @@ const VideoBlock = (props) => {
 
   useEffect(() => {
     Promise.all([
-      fetch('https://iroblog/jsonapi/node/videos?fields[node--videos]=title,field_video_link,drupal_internal__nid', {'method': 'GET'})
+      fetch(`${jsonAPI}/node/videos?fields[node--videos]=title,field_video_link,drupal_internal__nid`, {'method': 'GET'})
     ])
       .then (values => Promise.all(values.map(value => value.json())))
       .then(data => {

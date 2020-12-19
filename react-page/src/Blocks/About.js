@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled, {css} from 'styled-components'
-import irologo from '../assets/images/Logo.png'
+import {jsonAPI} from "../system/Url.js"
+import {baseUrl} from "../system/Url.js";
 
 const AboutBlockWrapper =  styled.div`
     background: no-repeat bottom right url('/vector.png');
@@ -51,7 +52,7 @@ class About extends Component {
 
   componentDidMount() {
     Promise.all([
-      fetch('https://iroblog/jsonapi/node/home_page?fields[node--home_page]=body,field_profile_image&include=field_profile_image&fields[file--file]=uri', {'method': 'GET'}),
+      fetch(`${jsonAPI}/node/home_page?fields[node--home_page]=body,field_profile_image&include=field_profile_image&fields[file--file]=uri`, {'method': 'GET'}),
     ])
       .then (values => Promise.all(values.map(value => value.json())))
       .then(data => {
@@ -71,7 +72,7 @@ class About extends Component {
 
         if (data[0]['included']) {
           data[0]['included'].map((elem, index) => {
-            profileImage = 'https://iroblog' + elem['attributes']['uri']['url'];
+            profileImage = `${baseUrl}` + elem['attributes']['uri']['url'];
           })
 
           this.setState({ profile: profileImage })

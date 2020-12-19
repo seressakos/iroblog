@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import styled, {css} from 'styled-components';
 
 const CardWrapper = styled.div`
@@ -54,7 +54,7 @@ const CardFooter = styled.div`
   text-align: right;
 `
 
-const ReceptioItem =({imageUrl, title, text, url}) => {
+const Reception =({imageUrl, title, text, url}) => {
   return (
     <CardWrapper>
       <CardInner>
@@ -75,4 +75,4 @@ const ReceptioItem =({imageUrl, title, text, url}) => {
   )
 }
 
-export default ReceptioItem;
+export default Reception;

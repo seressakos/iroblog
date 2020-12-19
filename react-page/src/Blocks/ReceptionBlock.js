@@ -1,6 +1,8 @@
 import React, { useState, useEffect  } from 'react';
-import ReceptioItem from "../Node/Reception";
 import styled, {css} from 'styled-components';
+import {jsonAPI} from "../system/Url.js";
+import {baseUrl} from "../system/Url.js";
+import Reception from "../Node/Reception";
 
 const ReceptionSection = styled.div`
   padding: 30px;
@@ -26,7 +28,7 @@ const MoreButtonWrapper = styled.div`
   padding: 30px 0;
 `
 
-const ReceptionBlock =(props) => {
+const ReceptionBlock =() => {
   const [node, setNode ] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [renderedElements, setRenderedElements] = useState(0);
@@ -41,7 +43,7 @@ const ReceptionBlock =(props) => {
 
   useEffect(() => {
     Promise.all([
-      fetch('https://iroblog/jsonapi/node/kritika?fields[node--kritika]=body,field_link,title,drupal_internal__nid,field_image&include=field_image&fields[file--file]=uri&sort=-nid', {'method': 'GET'})
+      fetch(`${jsonAPI}/node/kritika?fields[node--kritika]=body,field_link,title,drupal_internal__nid,field_image&include=field_image&fields[file--file]=uri&sort=-nid`, {'method': 'GET'})
     ])
       .then (values => Promise.all(values.map(value => value.json())))
       .then(data => {
@@ -56,7 +58,7 @@ const ReceptionBlock =(props) => {
           if (element['relationships']['field_image']['data']) {
             data[0]['included'].forEach( e => {
               if (element['relationships']['field_image']['data']['id'] === e['id']) {
-                let bookImage = 'https://iroblog' + e['attributes']['uri']['url'];
+                let bookImage = `${baseUrl}` + e['attributes']['uri']['url'];
                 nodeArray.push(createNodeObject({
                     text: text,
                     title: title,
@@ -76,12 +78,9 @@ const ReceptionBlock =(props) => {
               }
             ))
           }
-
-          if (index <= 2) {
-            setRenderedElements(index);
-          }
         });
 
+        setRenderedElements(Math.min(nodeArray.length, 2));
         setNode(nodeArray);
         setLoaded(true)
       })
@@ -111,7 +110,7 @@ const ReceptionBlock =(props) => {
           <Title>Hirek rolam</Title>
           <Block>
             {[...Array(renderedElements)].map((item, index) => {
-              return <ReceptioItem
+              return <Reception
                 key={node[index].id}
                 imageUrl={node[index].imageUrl}
                 title={node[index].title}

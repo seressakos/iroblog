@@ -43,21 +43,16 @@ const PaginationWrapper = styled.div`
 const BlogBlock = (props) => {
   const [elementsTorender, setElementsTorender] = useState([]);
   const [arrayOfNodeIndexes, setArrayOfNodeIndexes] = useState([]);
+  const [pagination, setPagination] = useState([]);
 
   useEffect(()=> {
-    let elements = [];
-    let allElements = []
-
-    props.elements.forEach((_, index) => {
-      if (index < 6) {
-        elements.push(index);
-      }
-
-      allElements.push(index);
-    })
+    let elements = [...Array(Math.min(props.elements.length, 6)).keys()];
+    let allElements = [...Array(props.elements.length).keys()];
+    let pagination = [...Array(Math.ceil(props.elements.length / 6)).keys()].map(i => ++i);
 
     setElementsTorender(elements);
     setArrayOfNodeIndexes(allElements);
+    setPagination(pagination);
   },[]);
 
   const renderElements = (e, props) => {
@@ -119,7 +114,7 @@ const BlogBlock = (props) => {
 
 
 
-  let paginations = props.pagination.map((elem, index) => {
+  let paginations = pagination.map((elem, index) => {
     if ((elem * 6) - 6 === elementsTorender[0]) {
       return  <li key={elem}>
         <a className='active' href='/' id={elem} onClick={(e) =>renderElements(e, props)}>{elem}</a>

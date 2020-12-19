@@ -1,5 +1,7 @@
 import React, { useState, useEffect  } from 'react';
-import styled, {css} from 'styled-components'
+import styled, {css} from 'styled-components';
+import {jsonAPI} from "../system/Url.js";
+import {baseUrl} from "../system/Url.js";
 
 const BookBlock = styled.div`
   background: #FFFAEC;
@@ -27,7 +29,7 @@ const MyBook =(props) => {
 
   useEffect(() => {
     Promise.all([
-      fetch('https://iroblog/jsonapi/paragraph/zigzag?fields[paragraph--zigzag]=field_description,field_book&include=field_book&fields[file--file]=uri&sort=created', {'method': 'GET'})
+      fetch(`${jsonAPI}/paragraph/zigzag?fields[paragraph--zigzag]=field_description,field_book&include=field_book&fields[file--file]=uri&sort=created`, {'method': 'GET'})
     ])
       .then (values => Promise.all(values.map(value => value.json())))
       .then(data => {
@@ -36,7 +38,7 @@ const MyBook =(props) => {
           let textArray = [];
 
           data[0]['included'].map(obj => {
-            let imgurl = 'https://iroblog' +  obj['attributes']['uri']['url'];
+            let imgurl = `${baseUrl}` +  obj['attributes']['uri']['url'];
             urlArray.push(imgurl)
           });
 

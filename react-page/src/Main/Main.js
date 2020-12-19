@@ -11,6 +11,8 @@ import Footer from "../Blocks/Footer";
 import ReceptionBlock from "../Blocks/ReceptionBlock";
 import SocialMedia from "../Blocks/SocialMedia";
 import {Route} from "react-router";
+import {jsonAPI} from "../system/Url.js";
+import {baseUrl} from "../system/Url.js";
 
 class MainPage extends Component {
   constructor(props) {
@@ -24,7 +26,6 @@ class MainPage extends Component {
       blog: {
         blogelements: [],
         renderedelements: [],
-        paginationelements: [],
       },
       loading: true,
       counter: 0,
@@ -35,8 +36,8 @@ class MainPage extends Component {
 
   componentDidMount() {
     Promise.all([
-      fetch('https://iroblog/jsonapi/node/article?fields[node--article]=created,author,title,body,field_image,drupal_internal__nid&include=field_image&fields[file--file]=uri&sort=-nid', {'method': 'GET'}),
-      fetch('https://iroblog/jsonapi/node/home_page?fields[node--home_page]=body&include=field_hero&fields[file--file]=uri&sort=-nid', {'method': 'GET'}),
+      fetch(`${jsonAPI}/node/article?fields[node--article]=created,author,title,body,field_image,drupal_internal__nid&include=field_image&fields[file--file]=uri&sort=-nid`, {'method': 'GET'}),
+      fetch(`${jsonAPI}/node/home_page?fields[node--home_page]=body&include=field_hero&fields[file--file]=uri&sort=-nid`, {'method': 'GET'}),
     ])
       .then (values => Promise.all(values.map(value => value.json())))
       .then (data => {
@@ -64,8 +65,6 @@ class MainPage extends Component {
           }
         })
 
-
-
         blog.contentelements = data[1]['data'].length;
 
          data[0]['data'].map((element, index) => {
@@ -78,7 +77,7 @@ class MainPage extends Component {
            if (element['relationships']['field_image']['data']) {
              data[0]['included'].forEach( e => {
                if (element['relationships']['field_image']['data']['id'] === e['id']) {
-                 let blogImage = 'https://iroblog' + e['attributes']['uri']['url'];
+                 let blogImage = `${baseUrl}` + e['attributes']['uri']['url'];
                  blog.blogelements.push(createBlogObject({
                      title: element['attributes']['title'],
                      text: text,
@@ -104,18 +103,12 @@ class MainPage extends Component {
            }
          })
 
-        let paginationElementNumber = Math.ceil(elements / 6);
-
-        for (let i = 1; i < paginationElementNumber + 1; i++) {
-          blog.paginationelements.push(i)
-        }
-
 
         this.setState({blog: blog})
 
         if (data[1]['included']) {
           data[1]['included'].map(obj => {
-            let imgurl = 'https://iroblog' +  obj['attributes']['uri']['url'];
+            let imgurl = `${baseUrl}` +  obj['attributes']['uri']['url'];
             heroImageUrls.push(imgurl);
           })
 
@@ -215,7 +208,6 @@ class MainPage extends Component {
             <BlogBlock
               elements={this.state.blog.blogelements}
               elementstorender = {this.state.blog.renderedelements}
-              pagination={this.state.blog.paginationelements}
             />
           )}/>
           <Route path={'/:blogid'} render={() => (
