@@ -12,8 +12,22 @@
   src: local('Muli Bold'), url('./assets/fonts/Muli-Bold.woff') format('woff');
 }
 
+@font-face {
+  font-family: 'WorkSans Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('WorkSans Regular'), url('./assets/fonts/WorkSans-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'WorkSans Bold';
+  font-style: normal;
+  font-weight: bold;
+  src: local('WorkSans Bold'), url('./assets/fonts/WorkSans-Bold.woff') format('woff');
+}
+
 body {
-  font-family: 'Muli Regular';
+  font-family: 'Muli Regular', Helvetica, sans-serif;
 }
 
 .container {
@@ -62,6 +76,7 @@ body {
 
 h2  {
   color: #EA4505;
+  font-family: WorkSans Regular, Helvetica, sans-serif;
   font-weight: normal;
   font-size: 36px;
   line-height: 42px;
@@ -69,7 +84,7 @@ h2  {
 
 h3 {
   color: #EA4505;
-  font-family: 'Muli Bold';
+  font-family: 'Muli Bold', Helvetica, sans-serif;
   font-size: 24px;
 }
 
@@ -80,7 +95,7 @@ h3 {
 h4 {
   color: #EA4505;
   font-size: 20px;
-  font-family: 'Muli Regular';
+  font-family: 'Muli Regular', Helvetica, sans-serif;
 }
 
 p {
@@ -89,7 +104,7 @@ p {
 
 
 a {
-  font-family: 'Muli Bold';
+  font-family: 'Muli Bold', Helvetica, sans-serif;
   color: #008089;
 }
 

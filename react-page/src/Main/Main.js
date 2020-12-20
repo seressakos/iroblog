@@ -10,6 +10,7 @@ import About from '../Blocks/About';
 import Footer from "../Blocks/Footer";
 import ReceptionBlock from "../Blocks/ReceptionBlock";
 import SocialMedia from "../Blocks/SocialMedia";
+import Newsletter from "../Blocks/Newsletter";
 import {Route} from "react-router";
 import {jsonAPI} from "../system/Url.js";
 import {baseUrl} from "../system/Url.js";
@@ -201,6 +202,7 @@ class MainPage extends Component {
                   leftposition={this.state.leftposition}
                 />
                 <ReceptionBlock/>
+                <Newsletter/>
                 <SocialMedia/>
               </div>
               )}/>

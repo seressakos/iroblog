@@ -10,10 +10,23 @@ const SocialMediaSection = styled.div`
  .container {
     display: flex;
     flex-direction: column;
+    align-items: normal;
+    justify-content: center;
  
  @media (min-width: 1200px) {
    flex-direction: row;
   }
+ }
+ 
+ .newsletter-block {
+   padding-top: 60px;
+   
+   .container {
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+   }
  }
 `
 

@@ -117,15 +117,6 @@ const MyBook =(props) => {
                   }
               </BookBlockTile>
 
-            // return <BookBlockTile key={index}>
-            //   <div className="container">
-            //     {urls.length > 0 ?         <div className="book-image">
-            //       <img src={urls[index]} width="324px" height="436px"/>
-            //     </div> : null}
-            //
-            //     <div className="trailer-text" dangerouslySetInnerHTML={{ __html: texts[index] }}></div>
-            //   </div>
-            // </BookBlockTile>
           })}
       </BookBlock>
     )

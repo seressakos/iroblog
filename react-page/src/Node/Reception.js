@@ -47,6 +47,11 @@ const CardBody = styled.div`
     padding: 30px;
    }
   }
+  
+  .text-alone {
+    width: 100%;
+    padding: 30px;
+   }
 `
 
 const CardFooter = styled.div`
@@ -59,10 +64,10 @@ const Reception =({imageUrl, title, text, url}) => {
     <CardWrapper>
       <CardInner>
         <CardBody>
-          {window.innerWidth > 600 ?  <div className="image-wrapper">
-            {imageUrl ?  <img src={imageUrl} width='180' height='275'/> : null}
+          {window.innerWidth > 600 && imageUrl ?  <div className="image-wrapper">
+             <img src={imageUrl} width='180' height='275'/>
           </div> : null}
-          <div className="text-wrapper">
+          <div className={imageUrl ? "text-wrapper" : "text-alone"}>
             <h4>{title}</h4>
             {text ? <div dangerouslySetInnerHTML={{ __html: text }}></div> : null}
           </div>
