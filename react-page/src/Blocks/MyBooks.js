@@ -40,7 +40,6 @@ const MyBook =(props) => {
   const [nodes, setNodes] = useState([]);
   const [urls, setUrls ] = useState([]);
   const [texts, setTexts ] = useState([]);
-  const [files, setFiles ] = useState([]);
 
   useEffect(() => {
     Promise.all([
@@ -51,7 +50,6 @@ const MyBook =(props) => {
       .then(data => {
         let urlArray= [];
         let textArray = [];
-        let fileUrl = [];
 
         data[0]['data'].map((obj, index) => {
           if (obj['attributes']['field_description']) {
@@ -67,15 +65,6 @@ const MyBook =(props) => {
 
         setUrls(urlArray);
         setTexts(textArray);
-
-        if (data[1]['included']) {
-          data[1]['included'].map(obj => {
-            let url = `${baseUrl}` +  obj['attributes']['uri']['url'];
-            fileUrl.push(url)
-          });
-        }
-
-        setFiles(fileUrl);
         setNodes(data);
       });
   }, []);
@@ -88,11 +77,6 @@ const MyBook =(props) => {
                   {index % 2 === 1 ? <div className="container">
                     <div className="trailer-text">
                       <div dangerouslySetInnerHTML={{ __html: texts[index] }}></div>
-                      {files[index] ?
-                        <div className="book-file">
-                          <a href={files[index]} download>Letöltės</a>
-                        </div>
-                        :null}
                     </div>
                     {urls.length > 0 ?  <div className="book-image">
                           <img src={urls[index]} width="324px" height="436px"/>
@@ -107,11 +91,6 @@ const MyBook =(props) => {
                       null}
                       <div className="trailer-text">
                         <div dangerouslySetInnerHTML={{ __html: texts[index] }}></div>
-                        {files[index] ?
-                        <div className="book-file">
-                          <a href={files[index]} download>Letöltės</a>
-                        </div> :
-                          null}
                       </div>
                     </div>
                   }

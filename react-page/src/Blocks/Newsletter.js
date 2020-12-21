@@ -6,7 +6,6 @@ const NewsletterBlock = styled.div`
   height: 340px;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
   background-attachment: fixed;
   
   .overlay {
