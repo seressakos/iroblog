@@ -41,7 +41,7 @@ const Newsletter = () => {
       <div className="container">
         <div className="inner-block">
           <h2>Iratkozz fel a hírlevelemre!</h2>
-          <a className="button" target="_blank" href="https://fodorzsana.us7.list-manage.com/subscribe/post?u=a834e0eb4a71ef34a817e8c72&amp;id=6d52bbadfe">
+          <a className="button" target="_blank" href="https://mailchi.mp/637fc48e3e7f/szeretsz-e-novella">
             Feliratkozás
           </a>
         </div>

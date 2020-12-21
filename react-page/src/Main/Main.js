@@ -122,20 +122,20 @@ class MainPage extends Component {
       })
   }
 
-  menuHandler = () => {
-    const blog = {...this.state.blog}
-    let contentelements = blog.blogelements.length;
-    const firstRenderedElements = [];
-
-    for (let i = 0; i < contentelements - 1; i ++) {
-      if (i < 6) {
-        firstRenderedElements.push(i)
-      }
-    }
-
-    blog.renderedelements = firstRenderedElements
-    this.setState({blog: blog})
-  }
+  // menuHandler = () => {
+  //   // const blog = {...this.state.blog}
+  //   // let contentelements = blog.blogelements.length;
+  //   // const firstRenderedElements = [];
+  //   //
+  //   // for (let i = 0; i < contentelements - 1; i ++) {
+  //   //   if (i < 6) {
+  //   //     firstRenderedElements.push(i)
+  //   //   }
+  //   // }
+  //   //
+  //   // blog.renderedelements = firstRenderedElements
+  //   // this.setState({blog: blog})
+  // }
 
   getIdofActiveDot = (e) => {
     const hero = {...this.state.hero}
@@ -181,7 +181,7 @@ class MainPage extends Component {
     } else {
       return (
         <div>
-          <Header navigationhandler={this.menuHandler}/>
+          <Header/>
           <Route
             path="/"
             exact render={() => (

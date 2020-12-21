@@ -10,6 +10,18 @@ const FooterBlock = styled.div`
    justify-content: space-between;
    padding: 30px 0;
    
+   @media (max-width: 400px) {
+     flex-direction: column;
+     
+     p {
+      text-align: center;
+     }
+     
+     .email {
+       padding-top: 15px;
+     }
+   }
+   
    p {
     color: white;
     }

@@ -11,6 +11,10 @@ const Ul = styled.ul`
   display: flex;
   justify-content: center;
   list-style: none;
+  
+  @media (max-width: 400px) {
+    margin: 0;
+  }
 `;
 
 const Li = styled.li`
@@ -58,19 +62,19 @@ class Header extends Component {
           <div className="container">
             <Ul>
               <Li><Link to="/">Home</Link></Li>
-              <Li onClick={this.props.navigationhandler}><Link to={{
+              <Li><Link to={{
                 pathname: '/blog',
                 hash: '#blog'
               }}>Blog</Link></Li>
             </Ul>
-            <FacebookShareButton url="www.fodorzsana.hu">
+            <FacebookShareButton url="http://fodorzsana.hu/">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M18 2H15C13.6739 2 12.4021 2.52678 11.4645 3.46447C10.5268 4.40215 10 5.67392 10 7V10H7V14H10V22H14V14H17L18 10H14V7C14 6.73478 14.1054 6.48043 14.2929 6.29289C14.4804 6.10536 14.7348 6 15 6H18V2Z" stroke="#EA4505" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </FacebookShareButton>
           </div>
           <div className="newsletter">
-            <a className="button" target="_blank" href="https://fodorzsana.us7.list-manage.com/subscribe/post?u=a834e0eb4a71ef34a817e8c72&amp;id=6d52bbadfe">
+            <a className="button" target="_blank" href="https://mailchi.mp/637fc48e3e7f/szeretsz-e-novella">
               Iratkozz fel!
             </a>
           </div>

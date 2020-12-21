@@ -12,6 +12,11 @@ const CardWrapper = styled.div`
   &:nth-child(n-2) {
    margin-top: 45px;
   }
+  
+  @media (max-width: 400px) {
+    width: 100%;
+    margin: 0;
+  }
 `;
 
 const CardInner = styled.div`

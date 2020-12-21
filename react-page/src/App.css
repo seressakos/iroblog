@@ -118,3 +118,17 @@ a {
 p {
   line-height: 24px;
 }
+
+.hero-overlay {
+  height: 100%;
+  background-color:rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.h1--hero {
+  color: white;
+  font-family: 'WorkSans Bold', Helvetica, sans-serif;
+  font-size: 60px;
+}

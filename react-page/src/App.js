@@ -4,7 +4,6 @@ import MainPage from './Main/Main'
 import {BrowserRouter} from "react-router-dom";
 
 
-
 class App extends Component {
   render() {
     return (
