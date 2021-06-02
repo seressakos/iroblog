@@ -100,6 +100,7 @@ h4 {
 
 p {
   color: #607D8B;
+  line-height: 2;
 }
 
 
@@ -115,10 +116,6 @@ a {
   display: block;
 }
 
-p {
-  line-height: 24px;
-}
-
 .hero-overlay {
   height: 100%;
   background-color:rgba(0, 0, 0, 0.2);
@@ -131,4 +128,11 @@ p {
   color: white;
   font-family: 'WorkSans Bold', Helvetica, sans-serif;
   font-size: 60px;
+  text-align: center;
+}
+
+@media (max-width: 400px) {
+  .h1--hero {
+    font-size: 40px;
+  }
 }

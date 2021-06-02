@@ -11,9 +11,11 @@ import Footer from "../Blocks/Footer";
 import ReceptionBlock from "../Blocks/ReceptionBlock";
 import SocialMedia from "../Blocks/SocialMedia";
 import Newsletter from "../Blocks/Newsletter";
+import PagesBlocks from "../Blocks/PagesBlocks";
 import {Route} from "react-router";
 import {jsonAPI} from "../system/Url.js";
 import {baseUrl} from "../system/Url.js";
+import Loader from "../Elements/Loader";
 
 class MainPage extends Component {
   constructor(props) {
@@ -122,21 +124,6 @@ class MainPage extends Component {
       })
   }
 
-  // menuHandler = () => {
-  //   // const blog = {...this.state.blog}
-  //   // let contentelements = blog.blogelements.length;
-  //   // const firstRenderedElements = [];
-  //   //
-  //   // for (let i = 0; i < contentelements - 1; i ++) {
-  //   //   if (i < 6) {
-  //   //     firstRenderedElements.push(i)
-  //   //   }
-  //   // }
-  //   //
-  //   // blog.renderedelements = firstRenderedElements
-  //   // this.setState({blog: blog})
-  // }
-
   getIdofActiveDot = (e) => {
     const hero = {...this.state.hero}
     let intager = e.target.id;
@@ -175,7 +162,7 @@ class MainPage extends Component {
     if (this.state.loading) {
       return (
         <div>
-          <h1>Loading...</h1>
+          <Loader/>
         </div>
       )
     } else {
@@ -195,6 +182,7 @@ class MainPage extends Component {
                     /> : null
                 }
                 <About/>
+                <PagesBlocks/>
                 <MyBook/>
                 <VideoBlock/>
                 <BlogSlider

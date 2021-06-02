@@ -57,7 +57,7 @@ const Footer = (props) => {
         <p>© 2020 - Minden jog fenntartva</p>
         <Logo/>
         <div className="email">
-          <a href = "mailto: s.fodor.zsusza@gmail.com">s.fodor.zsusza@gmail.com</a>
+          <a href = "mailto: fodorzsana@gmail.com">fodorzsana@gmail.com</a>
         </div>
       </div>
     </FooterBlock>

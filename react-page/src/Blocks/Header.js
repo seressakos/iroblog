@@ -74,7 +74,7 @@ class Header extends Component {
             </FacebookShareButton>
           </div>
           <div className="newsletter">
-            <a className="button" target="_blank" href="https://mailchi.mp/637fc48e3e7f/szeretsz-e-novella">
+            <a className="button" target="_blank" href="http://eepurl.com/hmn-b5">
               Iratkozz fel!
             </a>
           </div>

@@ -44,7 +44,6 @@ const MyBook =(props) => {
   useEffect(() => {
     Promise.all([
       fetch(`${jsonAPI}/paragraph/zigzag?fields[paragraph--zigzag]=field_description,field_book&include=field_book&fields[file--file]=uri&sort=created`, {'method': 'GET'}),
-      fetch(`${jsonAPI}/paragraph/zigzag?fields[paragraph--zigzag]=field_e_book&include=field_e_book&fields[file--file]=uri&sort=created`, {'method': 'GET'}),
     ])
       .then (values => Promise.all(values.map(value => value.json())))
       .then(data => {

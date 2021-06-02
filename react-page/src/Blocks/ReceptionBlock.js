@@ -3,9 +3,14 @@ import styled, {css} from 'styled-components';
 import {jsonAPI} from "../system/Url.js";
 import {baseUrl} from "../system/Url.js";
 import Reception from "../Node/Reception";
+import Loader from "../Elements/Loader";
 
 const ReceptionSection = styled.div`
   padding: 30px;
+  
+  @media (max-width: 400px) {
+    padding: 0;
+  }
 `
 
 const Block = styled.div`
@@ -107,7 +112,7 @@ const ReceptionBlock =() => {
     return (
       <ReceptionSection>
         <div className="container">
-          <Title>Hirek rolam</Title>
+          <Title>Hírek rólam</Title>
           <Block>
             {[...Array(renderedElements)].map((item, index) => {
               return <Reception
@@ -129,7 +134,7 @@ const ReceptionBlock =() => {
     );
   }
 
-  return (<div>Loading..</div>);
+  return (<Loader/>);
 }
 
 export default ReceptionBlock;

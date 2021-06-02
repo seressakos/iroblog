@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import ReactPlayer from "react-player";
 import styled, {css} from 'styled-components';
 import {jsonAPI} from "../system/Url.js";
+import Loader from "../Elements/Loader";
 
 const VideoBlockWrapper = styled.div`
   background: no-repeat url('/swiper-background.png');
@@ -68,7 +69,7 @@ const VideoBlock = (props) => {
 
   useEffect(() => {
     Promise.all([
-      fetch(`${jsonAPI}/node/videos?fields[node--videos]=title,field_video_link,drupal_internal__nid`, {'method': 'GET'})
+      fetch(`${jsonAPI}/node/videos?fields[node--videos]=title,field_video_link,drupal_internal__nid&sort=-nid`, {'method': 'GET'})
     ])
       .then (values => Promise.all(values.map(value => value.json())))
       .then(data => {
@@ -112,7 +113,7 @@ const VideoBlock = (props) => {
    return (
      <VideoBlockWrapper>
      <div className="container">
-       <h2>Videok</h2>
+       <h2>Videók</h2>
 
        <VideoWrapper ref={refContainer}>
          <VideoContainer style={{left: `${leftPosition}px`}}>
@@ -151,7 +152,7 @@ const VideoBlock = (props) => {
    )
  }
 
- return (<div>Loading...</div>);
+ return (<Loader/>);
 }
 
 export default VideoBlock;

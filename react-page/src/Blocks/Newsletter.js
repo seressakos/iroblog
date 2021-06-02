@@ -6,7 +6,12 @@ const NewsletterBlock = styled.div`
   height: 340px;
   background-repeat: no-repeat;
   background-position: center;
-  background-attachment: fixed;
+  
+  @media (max-width: 400px) {    
+    h2 {
+      text-align: center;
+    }
+  }
   
   .overlay {
     height: 100%;
@@ -41,7 +46,7 @@ const Newsletter = () => {
       <div className="container">
         <div className="inner-block">
           <h2>Iratkozz fel a hírlevelemre!</h2>
-          <a className="button" target="_blank" href="https://mailchi.mp/637fc48e3e7f/szeretsz-e-novella">
+          <a className="button" target="_blank" href="http://eepurl.com/hmn-b5">
             Feliratkozás
           </a>
         </div>

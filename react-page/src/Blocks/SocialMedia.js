@@ -171,7 +171,7 @@ const SocialMedia = () => {
                 }
             </div>
             <div className="social-link">
-              <a href="https://www.facebook.com/fodorzsana">Tovább a facebookra</a>
+              <a href="https://www.facebook.com/fodorzsana">Tovább a Facebookra</a>
             </div>
           </SocialMediaBlock>
           <SocialMediaBlock>
@@ -202,7 +202,7 @@ const SocialMedia = () => {
               }
             </div>
             <div className="social-link">
-              <a href="https://www.instagram.com/fodorzsana/">Tovább a linkedinre</a>
+              <a href="https://www.instagram.com/fodorzsana/">Tovább az Instagramra</a>
             </div>
           </SocialMediaBlock>
         </div>
